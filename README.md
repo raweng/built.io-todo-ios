@@ -1,7 +1,7 @@
 todo
 ====
 
-A simple ToDo app built using built.io as backend
+A simple ToDo app built using [built.io](http://www.built.io/) as backend
 
 ##Features
 - Create a task
