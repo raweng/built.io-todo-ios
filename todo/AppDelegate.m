@@ -25,8 +25,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    [Built initializeWithApiKey:@"bltad1e7e5f0cabdd5a"
-                         andUid:@"todoapp"];
+    #warning enter built.io api key and app uid
+    [Built initializeWithApiKey:@"api_key"
+                         andUid:@"app_uid"];
     
     BuiltUser *user = [BuiltUser getSession];
     if (user) {
@@ -62,11 +63,15 @@
 }
 
 - (NSString*)googleAppClientID {
-    return @"433785026559.apps.googleusercontent.com";
+    //create a project on Google APIs console https://code.google.com/apis/console/ and then enter client id
+    #warning enter client id
+    return @"google_client_id";
 }
 
 - (NSString*)googleAppClientSecret {
-    return @"C0scrv2bJPJsYEMADKWRiGLQ";
+    //create a project on Google APIs console https://code.google.com/apis/console/ and then enter client secret
+    #warning enter client secret
+    return @"google_client_secret";
 }
 
 -(void)loginSuccessWithUser:(BuiltUser *)user{
