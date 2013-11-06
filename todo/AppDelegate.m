@@ -35,12 +35,19 @@
         [self loadTasks];
     }else{
         BuiltUILoginController *loginController = [[BuiltUILoginController alloc]init];
+        
+        //select the login fields that will be displayed to the user
         loginController.fields = BuiltLoginFieldGoogle | BuiltLoginFieldUsernameAndPassword | BuiltLoginFieldLogin;
+        
+        //set google app setting delegate to set the app client id and secret of your google app
         loginController.googleAppSettingDelegate = self;
+        
+        //set the login delegate to be notified when user logs in
         loginController.delegate = self;
         loginController.shouldHandleLoadingHUD = YES;
         [loginController.logoImageView setImage:[UIImage imageNamed:@"todo-logo"]];
 
+        //initialize the navigation controller with the login controller
         self.nc = [[UINavigationController alloc]initWithRootViewController:loginController];
         
         self.window.backgroundColor = [UIColor whiteColor];
@@ -53,6 +60,7 @@
 }
 
 - (void)loadTasks{
+    //Initialize controller with class uid of the class that you create on built.io - todo_task
     TasksViewController *tasks = [[TasksViewController alloc]initWithStyle:UITableViewStylePlain withClassUID:@"todo_task"];
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         [tasks setEdgesForExtendedLayout:UIRectEdgeNone];

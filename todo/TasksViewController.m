@@ -31,6 +31,7 @@
     [super viewDidLoad];
     [self refresh];
     
+    //button to add a new task
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTasks)];
     [self.navigationItem setRightBarButtonItem:addButton];
 }
@@ -54,6 +55,7 @@
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         [tableView endUpdates];
         
+        //delete a task
         [task destroyOnSuccess:^{
 
         } onError:^(NSError *error) {
@@ -126,6 +128,8 @@
 - (void)markAsDone:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     BuiltObject *obj = [self builtObjectAtIndexPath:indexPath];
+    
+    //update a task with task_status as YES
     [obj setObject:[NSNumber numberWithBool:YES] forKey:@"task_status"];
     [obj saveOnSuccess:^{
 
@@ -138,6 +142,8 @@
 - (void)markAsUnDone:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     BuiltObject *obj = [self builtObjectAtIndexPath:indexPath];
+    
+    //update a task with task_status as NO
     [obj setObject:[NSNumber numberWithBool:NO] forKey:@"task_status"];
     [obj saveOnSuccess:^{
 
@@ -176,20 +182,27 @@
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
     if (buttonIndex != alertView.cancelButtonIndex) {
         [SVProgressHUD show];
+        
+        //create a new task
         BuiltObject *newTask = [BuiltObject objectWithClassUID:@"todo_task"];
         [newTask setObject:[alertView textFieldAtIndex:0].text forKey:@"task_name"];
         
         BuiltACL *acl = [BuiltACL ACL];
+        
+        //No one else can view, edit or delete a user's tasks
         [acl setReadAccess:YES forUserId:[BuiltUser currentUser].uid];
         [acl setWriteAccess:YES forUserId:[BuiltUser currentUser].uid];
         [acl setDeleteAccess:YES forUserId:[BuiltUser currentUser].uid];
         
+        //only the user creating the task has permissions to view, edit or delete it
         [acl setPublicReadAccess:NO];
         [acl setPublicWriteAccess:NO];
         [acl setPublicDeleteAccess:NO];
         
+        //set ACL
         [newTask setACL:acl];
         
+        //save the task
         [newTask saveOnSuccess:^{
             [SVProgressHUD showSuccessWithStatus:@"Added!"];
             [self.objectCollection insertObject:newTask atIndex:0];
