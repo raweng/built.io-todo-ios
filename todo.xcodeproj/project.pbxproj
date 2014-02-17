@@ -32,8 +32,6 @@
 		BA6A8ABC181F94C300D35AC5 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA6A8AB9181F94C300D35AC5 /* Twitter.framework */; };
 		BA6A8ACA1820102900D35AC5 /* todo-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = BA6A8AC91820102900D35AC5 /* todo-logo.png */; };
 		BA72F252182284F900F634BB /* TasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA72F251182284F900F634BB /* TasksViewController.m */; };
-		BA72F2551822851100F634BB /* BuiltIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA72F2531822851100F634BB /* BuiltIO.framework */; };
-		BA72F2561822851100F634BB /* BuiltIO.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BA72F2541822851100F634BB /* BuiltIO.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,8 +79,6 @@
 		BA6A8AC818200A5900D35AC5 /* AppIcon29x29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AppIcon29x29@2x.png"; path = "icons/AppIcon29x29@2x.png"; sourceTree = "<group>"; };
 		BA6A8AC91820102900D35AC5 /* todo-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "todo-logo.png"; sourceTree = "<group>"; };
 		BA72F251182284F900F634BB /* TasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksViewController.m; sourceTree = "<group>"; };
-		BA72F2531822851100F634BB /* BuiltIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BuiltIO.framework; sourceTree = "<group>"; };
-		BA72F2541822851100F634BB /* BuiltIO.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BuiltIO.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +94,6 @@
 				BA6A8AB4181F949A00D35AC5 /* CoreTelephony.framework in Frameworks */,
 				BA6A8AB0181F948E00D35AC5 /* SystemConfiguration.framework in Frameworks */,
 				BA6A8AAE181F948500D35AC5 /* Security.framework in Frameworks */,
-				BA72F2551822851100F634BB /* BuiltIO.framework in Frameworks */,
 				BA6A8AAC181F946B00D35AC5 /* QuartzCore.framework in Frameworks */,
 				BA6A8A7B181F837000D35AC5 /* CoreGraphics.framework in Frameworks */,
 				BA6A8A7D181F837000D35AC5 /* UIKit.framework in Frameworks */,
@@ -132,8 +127,6 @@
 		BA6A8A6C181F837000D35AC5 = {
 			isa = PBXGroup;
 			children = (
-				BA72F2531822851100F634BB /* BuiltIO.framework */,
-				BA72F2541822851100F634BB /* BuiltIO.bundle */,
 				BA5BF6C41820C91B0081AB02 /* SVProgressHUD */,
 				BA6A8AC91820102900D35AC5 /* todo-logo.png */,
 				BA6A8AC818200A5900D35AC5 /* AppIcon29x29@2x.png */,
@@ -292,7 +285,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA72F2561822851100F634BB /* BuiltIO.bundle in Resources */,
 				BA5BF6C81820C91B0081AB02 /* SVProgressHUD.bundle in Resources */,
 				BA6A8A83181F837000D35AC5 /* InfoPlist.strings in Resources */,
 				BA6A8A8B181F837000D35AC5 /* Images.xcassets in Resources */,
@@ -442,6 +434,7 @@
 					"$(inherited)",
 					/Users/akshay/Projects/todo,
 					/Users/akshay/Projects/todoapp/TODO,
+					"/Users/akshay/github/todo-ios/todo",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "todo/todo-Prefix.pch";
@@ -465,6 +458,7 @@
 					"$(inherited)",
 					/Users/akshay/Projects/todo,
 					/Users/akshay/Projects/todoapp/TODO,
+					"/Users/akshay/github/todo-ios/todo",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "todo/todo-Prefix.pch";
