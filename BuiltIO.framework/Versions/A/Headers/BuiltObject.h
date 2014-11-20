@@ -41,6 +41,10 @@
  */
 @property (nonatomic, retain) BuiltACL *ACL;
 
+/**
+ @abstract the response containing status code and all the raw HTTP response headers
+ */
+@property (strong, nonatomic, readonly) NSHTTPURLResponse *response;
 
 #pragma mark
 #pragma mark create object
@@ -370,6 +374,13 @@
  */
 - (BuiltLocation *)getLocation;
 
+
+/**
+ @abstract get the count of objects
+ @return count of objects
+ */
+- (NSInteger)getCount;
+
 #pragma mark
 #pragma mark object owner
 
@@ -402,14 +413,27 @@
 
 
 #pragma mark
-#pragma mark Additional Filters
+#pragma mark Additional Options
 
 /**
- @abstract Include custom filter in key value string
- @discussion Include custom filter in key value string.
- @param key Filter name to include.
- @param value Filter value to include.
+ @abstract Include the owner's profile in the objects' data.
+ @discussion The returned objects will also contain a key "_owner", which will include the owner's profile in the object's data.
  */
-- (void)includeFilterWithKey:(NSString *)key andValue:(id)value;
+- (void)includeOwner;
+
+
+/**
+ @abstract Gives object count alongwith the object returned in response.
+ @discussion Gives object count alongwith the object returned in response.
+ */
+- (void)includeCount;
+
+/**
+ @abstract Include custom query using a key and a value.
+ @discussion Include custom query using a key and a value.
+ @param key name of the query.
+ @param value value for the query.
+ */
+- (void)addQueryWithKey:(NSString *)key andValue:(id)value;
 
 @end

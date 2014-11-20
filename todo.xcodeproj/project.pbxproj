@@ -440,9 +440,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: RAW ENGINEERING INC";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/akshay/Projects/todo,
-					/Users/akshay/Projects/todoapp/TODO,
-					"/Users/akshay/github/todo-ios/todo",
+					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "todo/todo-Prefix.pch";
@@ -464,9 +462,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: RAW ENGINEERING INC";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/akshay/Projects/todo,
-					/Users/akshay/Projects/todoapp/TODO,
-					"/Users/akshay/github/todo-ios/todo",
+					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "todo/todo-Prefix.pch";

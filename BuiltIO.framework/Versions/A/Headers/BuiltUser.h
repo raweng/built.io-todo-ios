@@ -12,6 +12,22 @@
 
 #import <Foundation/Foundation.h>
 #import "BuiltLocation.h"
+#import <UIKit/UIKit.h>
+
+
+/**---------------------------------------------------------------------------------------
+ *  GoogleLoginDelegate
+ *  ---------------------------------------------------------------------------------------
+ */
+@protocol GoogleLoginDelegate <NSObject>
+
+/**
+ @abstract delegate method that provides the access token after authenticating with google. Implement this delegate when using google UI method showGoogleLoginUIOnViewController:forClientID:forClientSecret:
+ @param accessToken access token that is received from Google Authorization Server
+ */
+- (void)didReceiveAccessToken:(NSString *)accessToken;
+
+@end
 
 /** Users are a special class that allows adding the users functionality to your application. Features such as registration, logging in, logging out live here.
  
@@ -31,7 +47,10 @@
 + (BuiltUser *)currentUser;
 
 
-
+/**
+ @abstract the response containing status code and all the raw HTTP response headers
+ */
+@property (strong, nonatomic, readonly) NSHTTPURLResponse *response;
 
 
 /**---------------------------------------------------------------------------------------
@@ -157,6 +176,20 @@
  */
 + (BuiltUser *)user;
 
+/**
+ @abstract Creates a new BuiltUser object. Internally calls [BuiltUser user].
+ @discussion Creates a new BuiltUser object
+ @return Returns a new BuiltUser object.
+ */
++ (BuiltUser *)init;
+
+/**
+ @abstract Creates a new BuiltUser object from the response dictionary
+ @param dict the response dictionary for the application user
+ @discussion Creates a new BuiltUser object
+ @return Returns a new BuiltUser object.
+ */
+- (BuiltUser *)initWithUserDict:(NSDictionary *)dict;
 
 /** 
  @abstract set location for a user
@@ -528,5 +561,29 @@
  @discussion Since this method returns an object of BuiltQuery class, all the methods of the BuiltQuery class are available and can be used to query the application user class of built.io. Use -getUsers method of QueryResult to get the list of users.
  */
 + (BuiltQuery *)getUsersQuery;
+
+#pragma mark
+#pragma mark Google Login UI
+
+/**---------------------------------------------------------------------------------------
+ * @name Google Login UI
+ *  ---------------------------------------------------------------------------------------
+ */
+/**
+ @abstract Presents a login UI for Google Authentication
+ @param controller view controller on which to present google login UI
+ @param clientID client id of your installed application. You can get it from your google api console. https://code.google.com/apis/console
+ @param clientSecret client secret of your installed application. You can get it from your google api console. https://code.google.com/apis/console
+ @discussion Presents a UI for logging in with a google account. Useful when developing your custom login screen. Just use this method to present google login screen to capture user credentials and log in to your application using loginWithGoogleAuthAccessToken:onSuccess:onError:. Use GoogleLoginDelegate method to get the access token from google
+ */
+- (void)showGoogleLoginUIOnViewController:(UIViewController *)controller
+                              forClientID:(NSString *)clientID
+                          forClientSecret:(NSString *)clientSecret;
+
+/**
+ @abstract delegate for google login UI that provides methods for callback
+ @discussion delegate for google login UI that provides methods for callback
+ */
+@property (nonatomic, strong) id<GoogleLoginDelegate> googleLoginDelegate;
 
 @end

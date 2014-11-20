@@ -13,7 +13,6 @@
 #import <BuiltIO/BuiltACL.h>
 #import <BuiltIO/BuiltAnalytics.h>
 #import <BuiltIO/BuiltDelta.h>
-#import <BuiltIO/BuiltErrorCodes.h>
 #import <BuiltIO/BuiltExtension.h>
 #import <BuiltIO/BuiltEvent.h>
 #import <BuiltIO/BuiltFile.h>

@@ -32,6 +32,10 @@
  */
 + (BuiltQuery *)queryWithClassUID:(NSString *)classUID;
 
+/**
+ @abstract the response containing status code and all the raw HTTP response headers
+ */
+@property (strong, nonatomic, readonly) NSHTTPURLResponse *response;
 
 #pragma mark
 #pragma mark Add/Remove Optional Headers
@@ -456,22 +460,21 @@
 
 
 #pragma mark
-#pragma mark additional filters
+#pragma mark additional Options
 
 /**
- @abstract Include custom query in key value string
- @discussion Include custom query in key value string.
- @param key Query name to include.
- @param value Query value to include.
- 
+ @abstract Include custom query using a key and a value.
+ @discussion Include custom query using a key and a value.
+ @param key name of the query.
+ @param value value for the query.
  */
-- (void)includeFilterWithKey:(NSString *)key andValue:(NSString *)value;
+- (void)addQueryWithKey:(NSString *)key andValue:(NSString *)value;
 
 /**
  @abstract Remove provided query key from custom query if exist.
  @param key Query name to remove.
  */
--(void)removeFilterWithKey:(NSString *)key;
+-(void)removeQuery:(NSString *)key;
 
 #pragma mark
 #pragma mark Clear Query Conditions

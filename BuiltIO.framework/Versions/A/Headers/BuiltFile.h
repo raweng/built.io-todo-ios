@@ -16,17 +16,8 @@ typedef void (^BuiltImageBlock) (UIImage *image);
 typedef void (^BuiltImageBlock) (NSImage *image);
 #endif
 
-
-@protocol FileUploadDelegate <NSObject>
-
--(void)fileUploadSuccess;
--(void)fileUploadError;
-
-@end
-
 /**BuiltFile class to upload multiple images and files to built.io*/
 @interface BuiltFile : NSObject{
-    __weak id <FileUploadDelegate> fileUploadDelegate;
 }
 
 /**----------------------------------------------------------------------------------------
@@ -115,8 +106,10 @@ typedef void (^BuiltImageBlock) (NSImage *image);
 - (void)saveOnSuccess:(void (^)(void))successBlock
               onError:(void (^)(NSError *error))errorBlock;
 
-@property (nonatomic,weak) id <FileUploadDelegate> fileUploadDelegate;
-
+/**
+ @abstract the response containing status code and all the raw HTTP response headers
+ */
+@property (strong, nonatomic, strong) NSHTTPURLResponse *response;
 
 /**---------------------------------------------------------------------------------------
  * @name Creating a BuiltFile Object
@@ -128,6 +121,20 @@ typedef void (^BuiltImageBlock) (NSImage *image);
     @return Returns BuiltFile object.
  */
 + (BuiltFile *)file;
+
+/**
+ @abstract BuiltFile class to upload multiple images and files in built.io. Internally calls [BuiltFile file].
+ @return Returns BuiltFile object.
+ */
++ (BuiltFile *)init;
+
+
+/**
+ @abstract Use this method to create an object from the JSON response received for a file field in a BuiltObject.
+ @param builtFileResponse the JSON response with which to initialize the object.
+ @return Returns BuiltFile object initialized with the JSON response received.
+ */
++ (BuiltFile *)builtFileWithResponse:(NSDictionary *)builtFileResponse;
 
 /**---------------------------------------------------------------------------------------
  * @name Attaching/Removing Headers.

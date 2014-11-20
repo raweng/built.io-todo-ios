@@ -32,9 +32,19 @@
 @property (nonatomic, assign) BOOL localPush;
 
 /**
+ @abstract the response containing status code and all the raw HTTP response headers
+ */
+@property (strong, nonatomic, readonly) NSHTTPURLResponse *response;
+
+/**
  @abstract returns `BuiltNotification` object
  */
 + (BuiltNotification *)notification;
+
+/**
+ @abstract returns `BuiltNotification` object. Internally calls [BuiltNotification notification].
+ */
++ (BuiltNotification *)init;
 
 /**
  @abstract Additional headers if required

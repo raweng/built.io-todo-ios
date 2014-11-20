@@ -26,6 +26,13 @@
  */
 + (BuiltACL *)ACL;
 
+/**
+ @abstract Creates an ACL with no permissions granted. Internally calls [BuiltACL ACL].
+ @discussion Creates an ACL with no permissions granted.
+ @return BuiltACL object.
+ */
++ (BuiltACL *)init;
+
 /**---------------------------------------------------------------------------------------
  * @name Disable ACL
  *  ---------------------------------------------------------------------------------------

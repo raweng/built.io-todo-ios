@@ -17,7 +17,11 @@
 #define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type
 #endif
 
-typedef NS_ENUM(NSUInteger, BuiltLoginFields) {
+#ifndef NS_OPTIONS
+#define NS_OPTIONS(_type, _name) enum _name : _type _name; enum _name : _type
+#endif
+
+typedef NS_OPTIONS(NSUInteger, BuiltLoginFields) {
     BuiltLoginFieldNone = 0,
     BuiltLoginFieldUsernameAndPassword = 1 << 0,
     BuiltLoginFieldLogin = 1 << 1,
@@ -52,6 +56,11 @@ typedef NS_ENUM(NSUInteger, BuiltLoginFields) {
  @abstract Invoked before Login call will begin.
  */
 - (void)willBeginLogin;
+
+/**
+ @abstract Invoked when dismiss button is tapped.
+ */
+- (void)dismissTapped;
 
 @end
 
@@ -105,6 +114,9 @@ typedef NS_ENUM(NSUInteger, BuiltLoginFields) {
 @property (nonatomic, assign) id<BuiltUILoginDelegate> delegate;
 @property (nonatomic, assign) id<BuiltUIGoogleAppSettingDelegate> googleAppSettingDelegate;
 @property (nonatomic, assign) id<BuiltUITwitterAppSettingDelegate> twitterAppSettingDelegate;
+
+@property (nonatomic, strong) UILabel* signUpLabel;
+@property (nonatomic, strong) UILabel* otherLoginLabel;
 
 /**
  @abstract Specify the login fields which are to be displayed using this bitmask.

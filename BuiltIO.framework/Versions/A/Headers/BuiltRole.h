@@ -32,6 +32,10 @@
  */
 + (BuiltRole *)role;
 
+/**
+ @abstract Initializes a `BuiltRole` Object. Internally calls [BuiltRole init].
+ */
++ (BuiltRole *)init;
 
 /**---------------------------------------------------------------------------------------
  * @name Attaching/Removing Headers.

@@ -41,6 +41,10 @@ Use BuiltAnalytics class to track an event to analyse the datapoints, the use ca
  */
 @property(nonatomic,assign) NSUInteger flushInterval;
 
+/**
+ @abstract the response containing status code and all the raw HTTP response headers
+ */
+@property (strong, nonatomic, readonly) NSHTTPURLResponse *response;
 
 /**---------------------------------------------------------------------------------------
  * @name Instantiate BuiltAnalytics
@@ -50,7 +54,7 @@ Use BuiltAnalytics class to track an event to analyse the datapoints, the use ca
 /**
     @abstract Initializes and returns instance of the API or returns the previously instantiated singleton instance of the API.
  */
-+ (id)sharedInstance;
++ (BuiltAnalytics *)sharedInstance;
 
 
 /**----------------------------------------------------------------------------------------

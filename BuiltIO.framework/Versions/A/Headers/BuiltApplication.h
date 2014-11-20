@@ -42,6 +42,11 @@
  */
 @property (nonatomic, strong) NSDictionary *appDict;
 
+/**
+@abstract the response containing status code and all the raw HTTP response headers
+*/
+@property (strong, nonatomic, readonly) NSHTTPURLResponse *response;
+
 /**---------------------------------------------------------------------------------------
  * @name Creating BuiltApplication object
  *  ---------------------------------------------------------------------------------------
@@ -53,6 +58,11 @@
  */
 + (BuiltApplication *)application;
 
+/**
+ @abstract Create a new BuiltApplication object. Internally calls [BuiltApplication application].
+ @return BuiltApplication object
+ */
++ (BuiltApplication *)init;
 
 /**----------------------------------------------------------------------------------------
  * @name Attaching/Removing Headers
@@ -85,6 +95,23 @@
  @param uid appuid of the app
  */
 - (void)setApplicationApiKey:(NSString *)apiKey andUid:(NSString *)uid;
+
+/** --------------------------------------------------------------------------------------
+ @name Fetch schema of classes
+ -----------------------------------------------------------------------------------------
+ */
+
+/**
+ @abstract fetch schema for all the classes
+ @param successBlock Returns schema in callback on success. 'schema' contains the schema for all classes in the application
+ @param errorBlock CallBack in case of failure.
+ */
+- (void)fetchSchemaForClassesOnSuccess:(void (^) (id schema))successBlock onError:(void (^) (NSError *error))errorBlock;
+
+/**
+ @abstract Use when fetching classes schema. This will fetch only the last activity field in the classes schema.
+ */
+- (void)onlyLastActivityForSchema;
 
 
 /** --------------------------------------------------------------------------------------

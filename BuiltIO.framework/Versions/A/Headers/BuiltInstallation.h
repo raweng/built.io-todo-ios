@@ -113,7 +113,12 @@
  */
 + (BuiltInstallation *)installation;
 
-
+/**
+ @abstract Create BuiltInstallation instance. Internally calls [BuiltInstallation installation].
+ @return Returns BuiltInstallation object
+ @discussion Creates a BuiltInstallation object instance to update installations or subscribe/unsubscribe to installation channels
+ */
++ (BuiltInstallation *)init;
 
 #pragma mark
 #pragma mark Add/Remove Optional Headers
@@ -122,6 +127,13 @@
  * @name Attaching/Removing Headers
  *  ---------------------------------------------------------------------------------------
  */
+
+/**
+ @abstract set value for AuthToken. If set, this value will be replaced as AuthToken.
+ 
+ @param auth value for authtoken.
+ */
+- (void)setAuthToken:(NSString *)auth;
 
 /**
  @abstract Additional headers if required
