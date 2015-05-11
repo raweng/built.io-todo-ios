@@ -8,15 +8,15 @@
 
 #import "TasksViewController.h"
 #import "SVProgressHUD.h"
-
+#import "AppDelegate.h"
 @interface TasksViewController ()<UIAlertViewDelegate>
 
 @end
 
 @implementation TasksViewController
 
--(id)initWithStyle:(UITableViewStyle)style{
-    self = [super initWithStyle:style];
+-(id)initWithStyle:(UITableViewStyle)style withBuiltClass:(BuiltClass *)builtClass{
+    self = [super initWithStyle:style withBuiltClass:builtClass];
     if (self) {
         self.title = @"Tasks";
         self.enablePullToRefresh = YES;
@@ -56,11 +56,11 @@
         [tableView endUpdates];
         
         //delete a task
-        [task destroyOnSuccess:^{
-
-        } onError:^(NSError *error) {
-            [self.objectCollection insertObject:task atIndex:indexPath.row];
-            [tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [task destroyInBackgroundWithCompletion:^(ResponseType responseType, NSError *error) {
+            if (error) {
+                [self.objectCollection insertObject:task atIndex:indexPath.row];
+                [tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }
         }];
     }
 }
@@ -68,12 +68,8 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath builtObject:(BuiltObject *)builtObject{
     static NSString *CellIdentifier = @"CellIdentifier";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-
     NSMutableAttributedString *attributeString;
     attributeString = [[NSMutableAttributedString alloc] initWithString:[builtObject objectForKey:@"task_name"]];
     
@@ -131,11 +127,10 @@
     
     //update a task with task_status as YES
     [obj setObject:[NSNumber numberWithBool:YES] forKey:@"task_status"];
-    [obj saveOnSuccess:^{
-
-    } onError:^(NSError *error) {
-        [self unstrikeTask:[cell.textLabel.attributedText mutableCopy]];
-
+    [obj saveInBackgroundWithCompletion:^(ResponseType responseType, NSError *error) {
+        if (error) {
+            [self unstrikeTask:[cell.textLabel.attributedText mutableCopy]];
+        }
     }];
 }
 
@@ -145,10 +140,10 @@
     
     //update a task with task_status as NO
     [obj setObject:[NSNumber numberWithBool:NO] forKey:@"task_status"];
-    [obj saveOnSuccess:^{
-
-    } onError:^(NSError *error) {
-        [self isStriked:[cell.textLabel.attributedText mutableCopy]];
+    [obj saveInBackgroundWithCompletion:^(ResponseType responseType, NSError *error) {
+        if (error) {
+            [self isStriked:[cell.textLabel.attributedText mutableCopy]];
+        }
     }];
 }
 
@@ -184,15 +179,16 @@
         [SVProgressHUD show];
         
         //create a new task
-        BuiltObject *newTask = [BuiltObject objectWithClassUID:@"todo_task"];
+        BuiltClass *builtClass = [[AppDelegate sharedApplication].builtApplication classWithUID:@"todo_task"];
+        BuiltObject *newTask = [builtClass object];
         [newTask setObject:[alertView textFieldAtIndex:0].text forKey:@"task_name"];
         
-        BuiltACL *acl = [BuiltACL ACL];
+        BuiltACL *acl = [[AppDelegate sharedApplication].builtApplication acl];
         
         //No one else can view, edit or delete a user's tasks
-        [acl setReadAccess:YES forUserId:[BuiltUser currentUser].uid];
-        [acl setWriteAccess:YES forUserId:[BuiltUser currentUser].uid];
-        [acl setDeleteAccess:YES forUserId:[BuiltUser currentUser].uid];
+        [acl setReadAccess:YES forUserId:[[AppDelegate sharedApplication].builtApplication currentUser].uid];
+        [acl setWriteAccess:YES forUserId:[[AppDelegate sharedApplication].builtApplication currentUser].uid];
+        [acl setDeleteAccess:YES forUserId:[[AppDelegate sharedApplication].builtApplication currentUser].uid];
         
         //only the user creating the task has permissions to view, edit or delete it
         [acl setPublicReadAccess:NO];
@@ -203,16 +199,16 @@
         [newTask setACL:acl];
         
         //save the task
-        [newTask saveOnSuccess:^{
-            [SVProgressHUD showSuccessWithStatus:@"Added!"];
-            [self.objectCollection insertObject:newTask atIndex:0];
-            
-            NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
-            [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
-
-        } onError:^(NSError *error) {
-            
+        [newTask saveInBackgroundWithCompletion:^(ResponseType responseType, NSError *error) {
+            if (!error) {
+                [SVProgressHUD showSuccessWithStatus:@"Added!"];
+                [self.objectCollection insertObject:newTask atIndex:0];
+                
+                NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
+                [self.tableView insertRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }
         }];
+        
     }
 }
 

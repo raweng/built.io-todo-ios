@@ -1,52 +1,60 @@
 //
 //  BuiltACL.h
-//  builtDemo
+//  BuiltIO
 //
-//  Created by Samir Bhide on 19/03/13.
-//  Copyright (c) 2013 raweng. All rights reserved.
+//  Created by rawmacmini on 30/09/14.
+//  Copyright (c) 2014 raweng. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "BuiltUser.h"
-
-/** A BuiltACL is used to control which users can access or modify a particular object. Each BuiltObject can have its own BuiltACL. You can grant read and write permissions separately to specific users, to groups of users that belong to roles, or you can grant permissions to “the public” so that, for example, any user could read a particular object but only a particular set of users could write to that object. */
 
 @interface BuiltACL : NSObject
 
-@property (nonatomic, strong) NSMutableDictionary *aclDictionary;
-
-/**---------------------------------------------------------------------------------------
- * @name Creating an ACL
- *  ---------------------------------------------------------------------------------------
- */
-/**
-    @abstract Creates an ACL with no permissions granted.
-    @discussion Creates an ACL with no permissions granted.
-    @return BuiltACL object.
- */
-+ (BuiltACL *)ACL;
-
-/**
- @abstract Creates an ACL with no permissions granted. Internally calls [BuiltACL ACL].
- @discussion Creates an ACL with no permissions granted.
- @return BuiltACL object.
- */
-+ (BuiltACL *)init;
-
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
 /**---------------------------------------------------------------------------------------
  * @name Disable ACL
  *  ---------------------------------------------------------------------------------------
  */
 /**
- @abstract Disables ACL on a particular BuiltObject.
- @discussion Disables ACL on a particular BuiltObject.
+ Disables ACL on a particular BuiltObject.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltACL *aclObject = [builtApplication acl];
+     [aclObject disableACL:YES];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var aclObject:BuiltACL = builtApplication.acl()
+     aclObject.disableACL(true)
+ 
  @param disable When true disables ACL on BuiltObject, ables otherwise.
  */
 - (void)disableACL:(BOOL)disable;
 
 /**
- @abstract States whether ACL is enabled or disabled on BuiltObject.
- @discussion States whether ACL is enabled or disabled on BuiltObject.
+ States whether ACL is enabled or disabled on BuiltObject.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltACL *aclObject = [builtApplication acl];
+     if ([aclObject isDisabled]) {
+        // ACL enable
+     } else {
+        // ACL disable
+     }
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var aclObject:BuiltACL = builtApplication.acl()
+     if (aclObject.isDisabled) {
+        // ACL enable
+     } else {
+        // ACL disable
+     }
+ 
  @return Returns true/YES if ACL is enabled, false/NO otherwise.
  */
 - (BOOL)isDisabled;
@@ -56,51 +64,128 @@
  *  ---------------------------------------------------------------------------------------
  */
 /**
-    @abstract Set whether the others is allowed to read this object.
-    @discussion Set whether the public is allowed to read this object.
-    @param allowed Whether read access is allowed (YES/TRUE or NO/FALSE).
+ Set whether the public is allowed to read this object.
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    [aclObject setPublicReadAccess:YES];
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    aclObject.setPublicReadAccess(true)
+ 
+ @param allowed Whether read access is allowed (YES/TRUE or NO/FALSE).
  */
 - (void)setPublicReadAccess:(BOOL)allowed;
 
 
 /**
-    @abstract Gets whether the others is allowed to read this object.
-    @discussion Gets whether the public is allowed to read this object.
-    @return Returns YES if read access is granted to others. NO otherwise.
+ Gets whether the others is allowed to read this object.
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    if ([aclObject getPublicReadAccess]) {
+       // ACL public read access
+    }
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    if (aclObject.getPublicReadAccess()) {
+        // ACL public read access
+    }
+ 
+ @return Returns YES if read access is granted to others. NO otherwise.
  */
 - (BOOL)getPublicReadAccess;
 
 
 /**
-    @abstract Set whether the others is allowed to write this object.
-    @discussion Set whether the public is allowed to write this object.
-    @param allowed Whether write access is allowed (YES/TRUE or NO/FALSE).
+ Set whether the others is allowed to write this object.
  
+    //'blt5d4sample2633b' is a dummy Application API key
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    [aclObject setPublicWriteAccess:YES];
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    aclObject.setPublicWriteAccess(true)
+ 
+ @param allowed Whether write access is allowed (YES/TRUE or NO/FALSE).
  */
 - (void)setPublicWriteAccess:(BOOL)allowed;
 
 
 /**
-    @abstract Gets whether the others is allowed to write this object.
-    @discussion Gets whether the public is allowed to write this object.
-    @return Returns YES if write access is granted to others. NO otherwise.
+ Gets whether the others is allowed to write this object.
  
+    //'blt5d4sample2633b' is a dummy Application API key
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    if([aclObject getPublicWriteAccess]) {
+        //ACL public write access is granted
+    }
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    if (aclObject.getPublicWriteAccess()) {
+        //ACL public write access is granted
+    }
+ 
+ @return Returns YES if write access is granted to others. NO otherwise.
  */
 - (BOOL)getPublicWriteAccess;
 
 
 /**
-    @abstract Set whether the others is allowed to delete this object.
-    @discussion Gets whether the public is allowed to delete this object.
-    @param allowed Whether delete access is allowed (YES/TRUE or NO/FALSE).
+ Set whether the others is allowed to delete this object.
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    [aclObject setPublicDeleteAccess:YES];
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    aclObject.setPublicDeleteAccess(true)
+ 
+ @param allowed Whether delete access is allowed (YES/TRUE or NO/FALSE).
  */
 - (void)setPublicDeleteAccess:(BOOL)allowed;
 
 
 /**
-    @abstract Gets whether the others is allowed to delete this object.
-    @discussion Gets whether the public is allowed to delete this object.
-    @return Returns YES if delete access is granted to others. NO otherwise.
+ Gets whether the others is allowed to delete this object.
+ 
+
+    //'blt5d4sample2633b' is a dummy Application API key
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    if ([aclObject getPublicDeleteAccess]) {
+        // ACL public delete access
+    }
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    if (aclObject.getPublicDeleteAccess()) {
+        // ACL public delete access
+    }
+ 
+ @return Returns YES if delete access is granted to others. NO otherwise.
  */
 - (BOOL)getPublicDeleteAccess;
 
@@ -110,27 +195,75 @@
  *  ---------------------------------------------------------------------------------------
  */
 /**
-    @abstract Set whether the given user id is allowed to read this object.
-    @discussion Set whether the given user id is allowed to read this object.
-    @param allowed Whether read access is allowed (YES/TRUE or NO/FALSE).
-    @param userId The user id to assign access.
+ Set whether the given user id is allowed to read this object.
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+    //'bltba9sampleuser41' is a uid of an object of inbuilt Application User class
+ 
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    [aclObject setReadAccess:YES forUserId:@"bltba9sampleuser41"];
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    aclObject.setReadAccess(true, forUserId:"bltba9sampleuser41")
+ 
+ @param allowed Whether read access is allowed (YES/TRUE or NO/FALSE).
+ @param userId The user id to assign access.
  */
 - (void)setReadAccess:(BOOL)allowed forUserId:(NSString *)userId;
 
 
 /**
-    @abstract Gets whether the given user id is explicitly allowed to read this object.
+ Gets whether the given user id is explicitly allowed to read this object.
  Even if this returns NO, the user may still be able to access it if getPublicReadAccess returns YES
  or if the user belongs to a role that has access.
-    @param userId User ID for which to check read access.
-    @return Returns YES if read access is granted to others. NO otherwise.
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+    //'bltba9sampleuser41' is a uid of an object of inbuilt Application User class
+ 
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    if ([aclObject getReadAccessForUserId:@"bltba9sampleuser41"]) {
+        // Read access
+    } else {
+        // No Read access
+    }
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    if (aclObject.getReadAccessForUserId("bltba9sampleuser41")) {
+        // Read access
+    } else {
+        // No Read access
+    }
+ 
+ @param userId User ID for which to check read access.
+ @return Returns YES if read access is granted to others. NO otherwise.
  */
 - (BOOL)getReadAccessForUserId:(NSString *)userId;
 
 
 /**
- @abstract Set whether the given user id is allowed to write this object.
- @discussion Set whether the given user id is allowed to write this object.
+ Set whether the given user id is allowed to write this object.
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+    //'bltba9sampleuser41' is a uid of an object of inbuilt Application User class
+ 
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    [aclObject setWriteAccess:YES forUserId:@"bltba9sampleuser41"]
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    aclObject.setWriteAccess(true, forUserId:"bltba9sampleuser41")
+ 
  @param allowed Whether write access is allowed (YES/TRUE or NO/FALSE).
  @param userId The user id to assign access.
  */
@@ -138,9 +271,32 @@
 
 
 /**
- @abstract Gets whether the given user id is explicitly allowed to write this object.
+ Gets whether the given user id is explicitly allowed to write this object.
  Even if this returns NO, the user may still be able to access it if getPublicWriteAccess returns YES
  or if the user belongs to a role that has access.
+ 
+
+    //'blt5d4sample2633b' is a dummy Application API key
+    //'bltba9sampleuser41' is a uid of an object of inbuilt Application User class
+
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    if ([aclObject getWriteAccessForUserId:@"bltba9sampleuser41"]) {
+        //Write access for this user
+    } else {
+        //No write access
+    }
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    if (aclObject.getWriteAccessForUserId("bltba9sampleuser41")) {
+        //Write access for this user
+    } else {
+        //No write access
+    }
+ 
  @param userId User ID for which to check write access.
  @return Returns YES if write access is granted to others. NO otherwise.
  */
@@ -148,8 +304,21 @@
 
 
 /**
- @abstract Set whether the given user id is allowed to delete this object.
- @discussion Set whether the given user id is allowed to delete this object.
+ Set whether the given user id is allowed to delete this object.
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+    //'bltba9sampleuser41' is a uid of an object of inbuilt Application User class
+ 
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    [aclObject setDeleteAccess:YES forUserId:@"bltba9sampleuser41"];
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    aclObject.setDeleteAccess(true , forUserId:"bltba9sampleuser41")
+ 
  @param allowed Whether delete access is allowed (YES/TRUE or NO/FALSE).
  @param userId The user id to assign access.
  */
@@ -157,9 +326,32 @@
 
 
 /**
- @abstract Gets whether the given user id is explicitly allowed to delete this object.
+ Gets whether the given user id is explicitly allowed to delete this object.
  Even if this returns NO, the user may still be able to access it if getPublicDeleteAccess returns YES
  or if the user belongs to a role that has access.
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+    //'bltba9sampleuser41' is a uid of an object of inbuilt Application User class
+
+ 
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    if ([aclObject getDeleteAccessForUserId:@"bltba9sampleuser41"]) {
+        //Delete access allow for this user
+    } else {
+        //Delete not allow
+    }
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    if (aclObject.getDeleteAccessForUserId("bltba9sampleuser41")) {
+        //Delete access allow for this user");
+    } else {
+        //Delete not allow
+    }
+ 
  @param userId User ID for which to check delete access.
  @return Returns YES if delete access is granted to others. NO otherwise.
  */
@@ -170,9 +362,32 @@
  *  ---------------------------------------------------------------------------------------
  */
 /**
- @abstract Gets whether the users with given role are explicitly allowed to read this object.
+ Gets whether the users with given role are explicitly allowed to read this object.
  Even if this returns NO, the user may still be able to access it if getPublicReadAccess returns YES
  or if the user belongs to a role that has access.
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+    //'bltbg2samplerole84' is a uid of an object of inbuilt Application User class
+
+ 
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    if ([aclObject getRoleReadAccess:@"bltbg2samplerole84"]) {
+        //Role read allow
+    } else {
+        //Role read not allow
+    }
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    if (aclObject.getRoleReadAccess("bltbg2samplerole84")) {
+        //Role read allow
+    } else {
+        //Role read not allow
+    }
+ 
  @param role_uid Role UID for which to check read access.
  @return Returns YES if read access is granted to users with role. NO otherwise.
  */
@@ -180,9 +395,32 @@
 
 
 /**
- @abstract Gets whether the users with given role are explicitly allowed to write this object.
+ Gets whether the users with given role are explicitly allowed to write this object.
  Even if this returns NO, the user may still be able to access it if getPublicWriteAccess returns YES
  or if the user belongs to a role that has access.
+ 
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+    //'bltbg2samplerole84' is a uid of an object of inbuilt Application User class
+
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    if ([aclObject getRoleWriteAccess:@"bltbg2samplerole84"]) {
+        //Role write allow
+    } else {
+        //Role write not allow
+    }
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    if (aclObject.getRoleWriteAccess("bltbg2samplerole84")) {
+        //Role write allow
+    } else {
+        //Role write not allow
+    }
+ 
  @param role_uid Role UID for which to check write access.
  @return Returns YES if write access is granted to users with role. NO otherwise.
  */
@@ -190,9 +428,32 @@
 
 
 /**
- @abstract Gets whether the users with given role are explicitly allowed to delete this object.
+ Gets whether the users with given role are explicitly allowed to delete this object.
  Even if this returns NO, the user may still be able to access it if getPublicDeleteAccess returns YES
  or if the user belongs to a role that has access.
+ 
+
+    //'blt5d4sample2633b' is a dummy Application API key
+    //'bltbg2samplerole84' is a uid of an object of inbuilt Application User class
+
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    if ([aclObject getRoleDeleteAccess:@"bltbg2samplerole84"]) {
+        // Role delete allow
+    } else {
+        // Role delete not allow
+    }
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    if (aclObject.getRoleDeleteAccess("bltbg2samplerole84")) {
+        // Role delete allow
+    } else {
+        // Role delete not allow
+    }
+ 
  @param role_uid Role UID for which to check delete access.
  @return Returns YES if delete access is granted to users with role. NO otherwise.
  */
@@ -200,8 +461,21 @@
 
 
 /**
- @abstract Set whether the given users with role_uid are allowed to delete this object.
- @discussion Set whether the users with role_uid is allowed to read this object.
+ Set whether the given users with role_uid are allowed to delete this object.
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+    //'bltbg2samplerole84' is a uid of an object of inbuilt Application User class
+
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    [aclObject setRoleReadAccess:YES forRoleUID:@"bltbg2samplerole84"];
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    aclObject.setRoleReadAccess(true, forRoleUID:"bltbg2samplerole84")
+ 
  @param allowed Whether read access is allowed (YES/TRUE or NO/FALSE).
  @param role_uid The role uid to assign access.
  */
@@ -209,16 +483,42 @@
 
 
 /**
- @abstract Set whether the given users with role_uid are allowed to write this object.
- @discussion Set whether the users with role_uid is allowed to write this object.
+ Set whether the given users with role_uid are allowed to write this object.
+
+    //'blt5d4sample2633b' is a dummy Application API key
+    //'bltbg2samplerole84' is a uid of an object of inbuilt Application User class
+ 
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    [aclObject  setRoleWriteAccess:YES forRoleUID:@"bltbg2samplerole84"];
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    aclObject.setRoleWriteAccess(true, forRoleUID:"bltbg2samplerole84")
+ 
  @param allowed Whether write access is allowed (YES/TRUE or NO/FALSE).
  @param role_uid The role uid to assign access.
  */
 - (void)setRoleWriteAccess:(BOOL)allowed forRoleUID:(NSString *)role_uid;
 
 /**
- @abstract Set whether the given users with role_uid are allowed to delete this object.
- @discussion Set whether the users with role_uid is allowed to delete this object.
+ Set whether the given users with role_uid are allowed to delete this object.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+     //'bltbg2samplerole84' is a uid of an object of inbuilt Application User class
+ 
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltACL *aclObject = [builtApplication acl];
+    [aclObject setRoleDeleteAccess:YES forRoleUID:@"bltbg2samplerole84"];
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var aclObject:BuiltACL = builtApplication.acl()
+    aclObject.setRoleDeleteAccess(true, forRoleUID:"bltbg2samplerole84")
+ 
  @param allowed Whether delete access is allowed (YES/TRUE or NO/FALSE).
  @param role_uid The role uid to assign access.
  */

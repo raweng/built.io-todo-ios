@@ -7,19 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BuiltDefinitions.h"
 
 @class BuiltUser;
-@class BuiltSLGlowingTextField;
 @class ACAccount;
 @class BuiltACL;
-
-#ifndef NS_ENUM
-#define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type
-#endif
-
-#ifndef NS_OPTIONS
-#define NS_OPTIONS(_type, _name) enum _name : _type _name; enum _name : _type
-#endif
+@class BuiltApplication;
 
 typedef NS_OPTIONS(NSUInteger, BuiltLoginFields) {
     BuiltLoginFieldNone = 0,
@@ -108,14 +101,38 @@ typedef NS_OPTIONS(NSUInteger, BuiltLoginFields) {
 
 @end
 
+
 /** Login View Controller */
 @interface BuiltUILoginController : UIViewController
 
+/**
+ @abstract The application to which we should point to.
+ */
+@property (nonatomic, strong) BuiltApplication *builtApplication;
+
+/**
+ *  delegate for login
+ */
 @property (nonatomic, assign) id<BuiltUILoginDelegate> delegate;
+
+/**
+ *  delegate for Google App Setting
+ */
 @property (nonatomic, assign) id<BuiltUIGoogleAppSettingDelegate> googleAppSettingDelegate;
+
+/**
+ *  delegate for Twitter App Setting
+ */
 @property (nonatomic, assign) id<BuiltUITwitterAppSettingDelegate> twitterAppSettingDelegate;
 
+/**
+ *  Signup label
+ */
 @property (nonatomic, strong) UILabel* signUpLabel;
+
+/**
+ *  other login label
+ */
 @property (nonatomic, strong) UILabel* otherLoginLabel;
 
 /**
@@ -138,19 +155,19 @@ typedef NS_OPTIONS(NSUInteger, BuiltLoginFields) {
 @property (nonatomic, assign, getter = isHandlingLoadingHUD) BOOL shouldHandleLoadingHUD;
 
 /**
- @abstract this is the logo for the app. The default logo is for built.io.
+ @abstract this is the logo for the app. The default logo is for Built.io Backend.
  */
 @property (nonatomic, readonly) UIImageView* logoImageView;
 
 /**
  @abstract username field
  */
-@property (nonatomic, readonly) BuiltSLGlowingTextField* userNameField;
+@property (nonatomic, readonly) UITextField* userNameField;
 
 /**
  @abstract password field.
  */
-@property (nonatomic, readonly) BuiltSLGlowingTextField* passwordField;
+@property (nonatomic, readonly) UITextField* passwordField;
 
 /**
  @abstract login button.

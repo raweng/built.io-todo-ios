@@ -1,41 +1,61 @@
 //
 //  BuiltInstallation.h
-//  builtDemo
+//  BuiltIO
 //
-//  Created by Akshay Mhatre on 05/03/13.
-//  Copyright (c) 2013 raweng. All rights reserved.
+//  Created by rawmacmini on 29/09/14.
+//  Copyright (c) 2014 raweng. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import "BuiltObject.h"
-#import "QueryResult.h"
-
-/** Installation class for creating installation and subscribe/unsubscribe for push notifications against a channel*/
 
 @interface BuiltInstallation : BuiltObject
 
-
-/**----------------------------------------------------------------------------------------
- * @name Properties
- *-----------------------------------------------------------------------------------------
- */
-/**
- @abstract device type (iOS)
- */
-@property (nonatomic, readonly, strong) NSString *deviceType;
-
-/**
- @abstract unique id of the installation
- */
-@property (nonatomic, strong) NSString *installationId;
-
 /**
  @abstract APNS device token
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+     
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication installation];
+     NSString *deviceToken = installation.deviceToken;
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.installation()
+     var deviceToken:String = installation.deviceToken
+ 
+ 
  */
-@property (nonatomic, strong) NSString *deviceToken;
+@property (nonatomic, copy) NSString *deviceToken;
 
 /**
+ 
  @abstract subscription channels
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication installation];
+        
+     //setting channels
+     installation.channels = @[@"project.object.create", @"project.object.update"];
+ 
+     //getting channels
+     NSArray *channelsArray = installation.channels;
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.installation()
+     
+     //setting channels
+     installation.channels = ["project.object.create", "project.object.update"]
+ 
+     //getting channels
+     var channelsArray:AnyObject! = installation.channels
+ 
  @discussion You can use the following as channel names:
  
  **{class_uid}.object.create**
@@ -81,154 +101,402 @@
  
  **Developer-Defined Channels**
  
+ 
  These are the custom-channel names that the application developer can use subscribe/unsubscribe the installations to. This can be any random name. You can directly subscribe the installation to a channel, it is not required to create a channel first and then make the installation subscribe to it
  */
-@property (nonatomic, strong) NSArray *channels;
+@property (nonatomic, copy) NSArray *channels;
 
 
 /**
  @abstract time zone of the installation
+
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication installation];
+     NSTimeZone *timeZome = installation.timezone;
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.installation()
+     var timeZone:TimeZone = installation.timezone
+ 
  @discussion sets a time zone to the ionstalltion object. Default is the current system time zone.
  */
 @property (nonatomic, strong) NSTimeZone *timezone;
 
-
 /**
  @abstract location for an installation
-*/
+
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication installation];
+     BuiltLocation *builtLocation = installation.geoLocation;
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.installation()
+     var builtLocation:BuiltLocation =  installation.geoLocation
+ 
+ */
 @property (nonatomic, strong) BuiltLocation *geoLocation;
 
-
-#pragma mark
-#pragma mark Create Installation Object
-
-/**---------------------------------------------------------------------------------------
- * @name Creating installation object
- *  ---------------------------------------------------------------------------------------
- */
 /**
-    @abstract Create BuiltInstallation instance
-    @return Returns BuiltInstallation object
-    @discussion Creates a BuiltInstallation object instance to update installations or subscribe/unsubscribe to installation channels
- */
-+ (BuiltInstallation *)installation;
-
-/**
- @abstract Create BuiltInstallation instance. Internally calls [BuiltInstallation installation].
- @return Returns BuiltInstallation object
- @discussion Creates a BuiltInstallation object instance to update installations or subscribe/unsubscribe to installation channels
- */
-+ (BuiltInstallation *)init;
-
-#pragma mark
-#pragma mark Add/Remove Optional Headers
-
-/**---------------------------------------------------------------------------------------
- * @name Attaching/Removing Headers
- *  ---------------------------------------------------------------------------------------
- */
-
-/**
- @abstract set value for AuthToken. If set, this value will be replaced as AuthToken.
+ @abstract Credentials name for an installation. Default value is "default"
  
- @param auth value for authtoken.
- */
-- (void)setAuthToken:(NSString *)auth;
-
-/**
- @abstract Additional headers if required
+     //'blt5d4sample2633b' is a dummy Application API key
  
- @param header header value
- @param key header key
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication installation];
+     NSString *credentilasName = installation.credentialsName;
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.installation()
+     var credentialsName:String =  installation.credentialsName
+ 
+ 
  */
-- (void)setHeader:(NSString *)header forKey:(NSString *)key;
+@property (nonatomic, strong) NSString *credentialsName;
+
+
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
+
+//MARK: - Headers
+/**
+Set a header for an application
+
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication installation];
+     [installation setHeader:@"MyHeaderValue" forKey:@"My-Custom-Header-Key"];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.installation()
+     installation.setHeader("MyHeaderValue", forKey:"My-Custom-Header-Key")
+ 
+@param headerValue The header key
+@param headerKey   The header value
+ */
+- (void)setHeader:(NSString *)headerValue forKey:(NSString *)headerKey;
 
 /**
- @abstract Remove a header for a specific key
- @param key Key for which to remove the header value
+Set a header for an application
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication installation];
+     [installation addHeadersWithDictionary:@{@"My-Custom-Header": @"MyValue"}]
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.installation()
+     installation.addHeadersWithDictionary(["My-Custom-Header":"MyValue"])
+ 
+@param headers The headers as dictionary which needs to be added to the application
  */
-- (void)removeHeaderForKey:(NSString *)key;
-
-
-/** --------------------------------------------------------------------------------------
- @name Set api key and app uid for another application
- -----------------------------------------------------------------------------------------
- */
+- (void)addHeadersWithDictionary:(NSDictionary *)headers;
 
 /**
- @abstract If you require to create/retrieve/update an installation belonging to some other application, you can use this method to set the app parameters
- @param apiKey api key of the app
- @param appUid appuid of the app
+Removes a header from this application.
+
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication installation];
+     [installation removeHeaderForKey:@"My-Custom-Header"]
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.installation()
+     installation.removeHeaderForKey("My-Custom-Header")
+ 
+@param headerKey The header key that needs to be removed
  */
-- (void)setApplicationApiKey:(NSString *)apiKey andUid:(NSString *)appUid;
-
-
-
-#pragma mark
-#pragma mark Create installation
-
-/**---------------------------------------------------------------------------------------
- * @name Create Installation
- *  ---------------------------------------------------------------------------------------
- */
+- (void)removeHeaderForKey:(NSString *)headerKey;
 
 /**
- @abstract Create a new installation
- @discussion Create a new installation with the device token.
- @param deviceToken Device Token received from APNS.
- @param channels Array of channel we wish to subscribe to.
- @param successBlock Success callback. Returns installation dictionary on successful installation.
- @param errorBlock Error callback. Notifies an error that occured during installation.
+Clear installation data on disk
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication currentInstallation];
+     [installation clearInstallation];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.currentInstallation()
+     installation.clearInstallation()
+ 
  */
--(void)createInstallationWithDeviceToken:(NSData *)deviceToken andSubscriptionChannels:(NSArray *)channels onSuccess:(void (^)(void))successBlock onError:(void (^)(NSError *error))errorBlock;
+- (void)clearInstallation;
 
 
-#pragma mark
-#pragma mark Subscribe Unsubscribe to Channels
-
-/**---------------------------------------------------------------------------------------
- * @name Subscribe/Unsubcribe installation channels
- *  ---------------------------------------------------------------------------------------
- */
-
+//MARK: - Disable installation
 /**
-    @abstract Subscribe an installation to more channels.
-    @discussion Using this method you can add more channels to your subscription list.
-    @param channels Array of channel we wish to subscribe to.
-    @param successBlock Success callback. Returns installation data for the given installation ID after successful subscription
-    @param errorBlock Error callback.
+Disable installation
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication currentInstallation];
+     [installation disableInstallation:YES];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.currentInstallation()
+     installation.disableInstallation(true)
+ 
  */
--(void)subscribeToChannels:(NSArray *)channels onSuccess:(void (^)(void))successBlock onError:(void (^)(NSError *error))errorBlock;
+- (void)disableInstallation:(BOOL)shouldDisable;
 
+
+//MARK: - Clear Badge
 /**
-    @abstract Unsubscribe an installation from channels
-    @discussion Using this method you can unsubscribe from channels.
-    @param channels Array of channel we wish to unsubscribe to.
-    @param successBlock Success callback. Returns installation data for the given installation ID after successful unsubscription
-    @param errorBlock Error callback.
- */
--(void)unsubscribeToChannels:(NSArray *)channels onSuccess:(void (^)(void))successBlock onError:(void (^)(NSError *error))errorBlock;
+ Clear the badge count
+ 
+ This method notifies Built.io Backend to set the notification badge count to zero.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication installation];
+     [installation clearBadge];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.installation()
+     installation.clearBadge()
+ 
 
-/**
- @abstract Returns the current installation object that is saved on the disk.
- @discussion the installation is saved on the disk when createInstallationWithDeviceToken:andSubscriptionChannels:onSuccess:onError: is successfully executed.
- */
-+(BuiltInstallation *)currentInstallation;
-
-
-/**
- @abstract update the current installation with the logged in user, location and time zone.
- @param successBlock Success callback.
- @param errorBlock Error callback.
- @discussion this method associates the installation with the user and updates the location and timezone if set. Call this method after the user is logged in if user is to be associated with the installation.
- */
-- (void)updateInstallationOnSuccess:(void (^)(void))successBlock onError:(void (^) (NSError *error))errorBlock;
-
-
-/**
- @abstract clear the badge count
- @discussion this method notifies built.io to set the notification badge count to zero.
  */
 - (void)clearBadge;
+
+//MARK: - Create/Update Installation
+/**
+Synchronously create a new installation
+
+Create a new installation with the device token.
+
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication installation];
+     NSError *error;
+     NSArray subscriptionChannels = @[@"Sports", @"Technology"];
+     [installation createInstallationWithSubscriptionChannels:subscriptionChannels error:error];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.installation()
+     var error:NSErrorPointer
+     var subscriptionChannels = ["Sports", "Technology"]
+     installation.createInstallationWithSubscriptionChannels(subscriptionChannels, error:error)
+ 
+ 
+@param channels Array of channel we wish to subscribe to.
+@param error Pointer to an NSError that will be set if necessary.
+ */
+- (void)createInstallationWithSubscriptionChannels:(NSArray *)channels error:(NSError **)error;
+
+/**
+ @abstract Asynchronously create a new installation
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+ 
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltInstallation *installation = [builtApplication installation];
+    NSError *error;
+    NSArray subscriptionChannels = @[@"Sports", @"Technology"];
+    [installation createInstallationInBackgroundWithSubscriptionChannels:subscriptionChannels completion:^(ResponseType responseType, NSError *error) {
+
+    }];
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var installation:BuiltInstallation = builtApplication.installation()
+    var subscriptionChannels = ["Sports", "Technology"]
+    installation.createInstallationInBackgroundWithSubscriptionChannels(subscriptionChannels) { (ResponseType, NSError!) -> Void in
+
+    }
+ 
+ 
+ @discussion Create a new installation with the device token.
+ @param channels Array of channel we wish to subscribe to.
+ @param completionBlock Completion block with params (ResponseType responseType, id responseJSON, NSError *error)
+ */
+- (void)createInstallationInBackgroundWithSubscriptionChannels:(NSArray *)channels completion:(BuiltRequestCompletionHandler)completionBlock;
+
+/**
+ @abstract Synchronously update the current installation with the logged in user, location and time zone.
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+ 
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltInstallation *installation = [builtApplication installation];
+    NSError *error;
+    [installation updateInstallation:error];
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var installation:BuiltInstallation = builtApplication.installation()
+    var error:NSErrorPointer
+    installation.updateInstallation(error)
+ 
+ 
+ @discussion this method associates the installation with the user and updates the location and timezone if set. Call this method after the user is logged in if user is to be associated with the installation.
+ @param error Pointer to an NSError that will be set if necessary.
+ */
+- (void)updateInstallation:(NSError **)error;
+
+/**
+ @abstract Asynchronously update the current installation with the logged in user, location and time zone.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication installation];
+     [installation updateInstallationInBackgroundWithCompletion:^(ResponseType responseType, NSError *error) {
+     
+     }];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.installation()
+     installation.updateInstallationInBackgroundWithCompletion { (ResponseType, NSError!) -> Void in
+     
+     }
+ 
+ @discussion this method associates the installation with the user and updates the location and timezone if set. Call this method after the user is logged in if user is to be associated with the installation.
+ @param completionBlock Completion block with params (ResponseType responseType, id responseJSON, NSError *error)
+ */
+- (void)updateInstallationInBackgroundWithCompletion:(BuiltRequestCompletionHandler)completionBlock;
+
+
+//MARK: - Subscribe Unsubscribe to Channels
+/**
+ @abstract Synchronously subscribe an installation to more channels.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication installation];
+     NSError *error;
+     NSArray subscriptionChannels = @[@"Sports", @"Technology"];
+     [installation  subscribeToChannels:subscriptionChannels error:error];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.installation()
+     var error:NSErrorPointer
+     var subscriptionChannels = ["Sports", "Technology"]
+     installation.subscribeToChannels(subscriptionChannels, error:error)
+ 
+ 
+ @discussion Using this method you can add more channels to your subscription list.
+ @param channels Array of channel we wish to subscribe to.
+ @param error Pointer to an NSError that will be set if necessary.
+ */
+- (void)subscribeToChannels:(NSArray *)channels error:(NSError **)error;
+
+/**
+ @abstract Asynchronously subscribe an installation to more channels.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication installation];
+     NSArray subscriptionChannels = @[@"Sports", @"Technology"];
+     
+     [installation  subscribeToChannelsInBackground:subscriptionChannels completion:^(ResponseType responseType, NSError *error) {
+     
+     }];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.installation()
+     var subscriptionChannels = ["Sports", "Technology"]
+     installation.subscribeToChannelsInBackground(subscriptionChannels) { (ResponseType, NSError!) -> Void in
+     
+     }
+ 
+ @discussion Using this method you can add more channels to your subscription list.
+ @param channels Array of channel we wish to subscribe to.
+ @param completionBlock Completion block with params (ResponseType responseType, id responseJSON, NSError *error)
+ */
+- (void)subscribeToChannelsInBackground:(NSArray *)channels completion:(BuiltRequestCompletionHandler)completionBlock;
+
+/**
+ @abstract Synchronously unsubscribe an installation from channels
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication installation];
+     NSError *error;
+     NSArray unsubscriptionChannels = @[@"Sports", @"Technology"];
+     [installation  unsubscribeToChannels:unsubscriptionChannels error:error];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.installation()
+     var error:NSErrorPointer
+     var unsubscriptionChannels = ["Sports", "Technology"]
+     installation.unsubscribeToChannels(unsubscriptionChannels, error:error)
+ 
+ @discussion Using this method you can unsubscribe from channels.
+ @param channels Array of channel we wish to unsubscribe to.
+ @param error Pointer to an NSError that will be set if necessary.
+ */
+- (void)unsubscribeToChannels:(NSArray *)channels error:(NSError **)error;
+
+/**
+ @abstract Asynchronously unsubscribe an installation from channels
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication installation];
+     NSArray unsubscriptionChannels = @[@"Sports", @"Technology"];
+     [installation  unsubscribeToChannelsInBackground:unsubscriptionChannels completion:^(ResponseType responseType, NSError *error) {
+     
+     }];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.installation()
+     var unsubscriptionChannels = ["Sports", "Technology"]
+     installation.unsubscribeToChannelsInBackground(unsubscriptionChannels) { (ResponseType, NSError!) -> Void in
+     
+     }
+ 
+ 
+ @discussion Using this method you can unsubscribe from channels.
+ @param channels Array of channel we wish to unsubscribe to.
+ @param completionBlock Completion block with params (ResponseType responseType, id responseJSON, NSError *error)
+ */
+-(void)unsubscribeToChannelsInBackground:(NSArray *)channels completion:(BuiltRequestCompletionHandler)completionBlock;
 
 @end

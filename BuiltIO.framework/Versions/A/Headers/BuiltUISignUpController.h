@@ -7,14 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BuiltDefinitions.h"
 
-@class BuiltACL;
+@class BuiltACL, BuiltApplication;
 
 /** SignUp View Controller */
 @interface BuiltUISignUpController : UIViewController
 
 /**
- @abstract this is the logo for the app. The default logo is for built.io.
+ @abstract The application to which we should point to.
+ */
+@property (nonatomic, strong) BuiltApplication *builtApplication;
+
+/**
+ @abstract this is the logo for the app. The default logo is for Built.io Backend.
  */
 @property (nonatomic, strong, readonly) UIImageView* logoImageView;
 

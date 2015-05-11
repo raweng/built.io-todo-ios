@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import <BuiltIO/BuiltIO.h>
+#import <BuiltIO/BuiltUILoginController.h>
 #import "TasksViewController.h"
 
 @interface AppDelegate()<BuiltUIGoogleAppSettingDelegate, BuiltUILoginDelegate>{
@@ -25,17 +25,16 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    #warning enter built.io api key and app uid
-    [Built initializeWithApiKey:@"api_key"
-                         andUid:@"app_uid"];
+    #error Enter Built.io application APIKEY
+    self.builtApplication = [Built applicationWithAPIKey:@"APIKEY"];
     
-    BuiltUser *user = [BuiltUser getSession];
+    BuiltUser *user = [self.builtApplication currentUser];
     if (user) {
-        [BuiltUser setCurrentUser:user];
+        [user setAsCurrentUser];
         [self loadTasks];
     }else{
-        BuiltUILoginController *loginController = [[BuiltUILoginController alloc]init];
-        
+        BuiltUILoginController *loginController = [[BuiltUILoginController alloc] initWithNibName:nil bundle:nil];
+        loginController.builtApplication = self.builtApplication;
         //select the login fields that will be displayed to the user
         loginController.fields = BuiltLoginFieldGoogle | BuiltLoginFieldUsernameAndPassword | BuiltLoginFieldLogin;
         
@@ -61,7 +60,8 @@
 
 - (void)loadTasks{
     //Initialize controller with class uid of the class that you create on built.io - todo_task
-    TasksViewController *tasks = [[TasksViewController alloc]initWithStyle:UITableViewStylePlain withClassUID:@"todo_task"];
+    BuiltClass *builtClass = [self.builtApplication classWithUID:@"todo_task"];
+    TasksViewController *tasks = [[TasksViewController alloc]initWithStyle:UITableViewStylePlain withBuiltClass:builtClass];
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         [tasks setEdgesForExtendedLayout:UIRectEdgeNone];
     }
@@ -83,8 +83,7 @@
 }
 
 -(void)loginSuccessWithUser:(BuiltUser *)user{
-    [BuiltUser setCurrentUser:user];
-    [user saveSession];
+    [user setAsCurrentUser];
     [self loadTasks];
 }
 
@@ -92,6 +91,9 @@
 
 }
 
++(AppDelegate *)sharedApplication {
+    return ((AppDelegate*) [UIApplication sharedApplication].delegate);
+}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

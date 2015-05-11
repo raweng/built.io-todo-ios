@@ -7,18 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BuiltDefinitions.h"
 
-@class BuiltObject;
-@class Built;
-@class BuiltQuery;
-
-#ifndef NS_ENUM
-#define NS_ENUM(_type, _name) enum _name : _type _name; enum _name : _type
-#endif
+@class BuiltClass, BuiltObject, BuiltQuery, BuiltApplication;
 
 typedef NS_ENUM(NSUInteger, AutoLoadType) {
     AutoLoadTypeNone = 0,
-    AutoLoadTypeLoadNextAtEndOfRow,
     AutoLoadTypeLoadMoreViewAtEndOfRow
 };
 
@@ -80,6 +74,16 @@ typedef NS_ENUM(NSUInteger, AutoLoadType) {
 
 @interface BuiltUITableViewController : UITableViewController <BuiltUITableViewDataSource>
 
+/**
+ @abstract The application to which we should point to.
+ */
+@property (nonatomic, readonly) BuiltApplication *builtApplication;
+
+/**
+ @abstract UID of Built Class which needs to be bound.
+ */
+@property (nonatomic, copy, readonly) NSString* classUID;
+
 @property (nonatomic, readonly) NSInteger totalObjectsCount;
 @property (nonatomic, readonly) NSInteger totalPages;
 @property (nonatomic, readonly) NSInteger currentPage;
@@ -90,7 +94,6 @@ typedef NS_ENUM(NSUInteger, AutoLoadType) {
 @property (nonatomic, readonly) BuiltQuery *builtQuery;
 @property (nonatomic, assign, getter = isShowingSearchBar) BOOL showSearchBar; //if YES you have to implement searchTableView:cellForRowAtIndexPath:builtObject:
 @property (nonatomic, copy)     NSString* searchFieldUID;
-@property (nonatomic, readonly) UISearchDisplayController* searchDisplayController UNAVAILABLE_ATTRIBUTE;
 @property (nonatomic, readonly) UISearchDisplayController* searchController;
 
 @property (nonatomic, assign)   UITableViewRowAnimation insertTableViewRowAnimation; // default UITableViewRowAnimationTop
@@ -106,10 +109,10 @@ typedef NS_ENUM(NSUInteger, AutoLoadType) {
  @abstract Initializes a table-view controller to manage a table view of a given style and binds with Built Class of a given classUID.
  @discussion Same as UITableViewController; Additionally it binds table-view controller with a given classUID. 
  @param style A constant that specifies the style of table view that the controller object is to manage (UITableViewStylePlain or UITableViewStyleGrouped).
- @param classUID UID of Built Class which need to be bound.
+ @param bltApplication application needs to be pointed to.
  @return An initialized UITableViewController object or nil if the object couldn't be created
  */
-- (id)initWithStyle:(UITableViewStyle)style withClassUID:(NSString*)classUID;
+- (instancetype)initWithStyle:(UITableViewStyle)style withBuiltClass:(BuiltClass *)builtClass;
 
 /**
  @abstract Returns the BuiltObject of given indexPath.

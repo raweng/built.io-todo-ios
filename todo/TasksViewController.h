@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 raweng. All rights reserved.
 //
 
-#import <BuiltIO/BuiltIO.h>
+#import <BuiltIO/BuiltUITableViewController.h>
 //#import "BuiltUITableViewController.h"
 
 @interface TasksViewController : BuiltUITableViewController

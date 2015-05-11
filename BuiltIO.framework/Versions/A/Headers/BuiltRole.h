@@ -1,70 +1,100 @@
 //
 //  BuiltRole.h
-//  builtDemo
+//  BuiltIO
 //
-//  Created by Akshay Mhatre on 23/03/13.
-//  Copyright (c) 2013 raweng. All rights reserved.
+//  Created by rawmacmini on 29/09/14.
+//  Copyright (c) 2014 raweng. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "BuiltUser.h"
 #import "BuiltObject.h"
-
 @class BuiltQuery;
-/** Roles are a sort of group containing users and other roles. So instead of giving permission to each user, could instead add those users to and assign permissions to the role. 
- All users in the role would inherit permissions that the role receives.
- */
+
 @interface BuiltRole : BuiltObject
 
-/**---------------------------------------------------------------------------------------
- * @name Create a BuiltRole Object.
- *  ---------------------------------------------------------------------------------------
- */
 /**
- @abstract Initializes a `BuiltRole` Object with a name.
- @param name the name for the role.
+ Get the name of the role.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+     //'blt8h2sample1463j' is a dummy role uid
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltRole *role = [builtApplication roleWithUID:@"blt8h2sample1463j"];
+     NSString *roleName = role.roleName;
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var role:BuiltRole = builtApplication.roleWithUID("blt8h2sample1463j")
+     var roleName:String = role.roleName
+ 
  */
-+ (BuiltRole *)roleWithName:(NSString *)name;
-
-
-/**
- @abstract Initializes a `BuiltRole` Object.
- */
-+ (BuiltRole *)role;
-
-/**
- @abstract Initializes a `BuiltRole` Object. Internally calls [BuiltRole init].
- */
-+ (BuiltRole *)init;
-
-/**---------------------------------------------------------------------------------------
- * @name Attaching/Removing Headers.
- *  ---------------------------------------------------------------------------------------
- */
+@property(nonatomic, copy, readonly) NSString *roleName;
 
 /**
- @abstract Additional headers if required
- @param header header value
- @param key header key
+ Array of users that are included in a `BuiltRole`.
+
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltRole *role = [builtApplication roleWithName:@"Manager"];
+     NSMutableArray *usersArray = role.users;
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var role:BuiltRole = builtApplication.roleWithName("Manager")
+     var userArray = role.users
+ 
  */
-- (void)setHeader:(NSString *)header forKey:(NSString *)key;
+@property(nonatomic, strong) NSMutableArray *users;
 
 /**
- @abstract Remove a header for a specific key
- @param key key for which to remove the header value
+ Array of other roles that are included in a `BuiltRole`. A role may have other roles included in it.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltRole *role = [builtApplication roleWithName:@"Manager"];
+     NSMutableArray *rolesArray = role.roles;
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var role:BuiltRole = builtApplication.roleWithName("Manager")
+     var roleArray = role.roles
+ 
  */
-- (void)removeHeaderForKey:(NSString *)key;
+@property(nonatomic, strong) NSMutableArray *roles;
 
-/**
-    @abstract If you require to fetch roles belonging to some other application, you can use this method to set the app parameters.
-    @param apiKey api key of the app.
-    @param uid appuid of the app.
- */
-- (void)setApplicationApiKey:(NSString *)apiKey andUid:(NSString *)uid;
 
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
 
 /**
  @abstract Checks whether a role exists inside this role.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+     //'blt8h2sample1463j' is a dummy role uid
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltRole *role = [builtApplication roleWithName:@"Manager"];
+     if ([role hasRole:@"blt8h2sample1463j"]) {
+        //Role exist"
+     } else {
+        //Role not exist"
+     }
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var role:BuiltRole = builtApplication.roleWithName("Manager")
+     if (role.hasRole("blt8h2sample1463j")) {
+        //Role exist
+     } else {
+        //Role not exist
+     }
+ 
+ 
  @param roleUID The uid of the role.
  @return Returns whether the role exists or not.
  */
@@ -72,61 +102,157 @@
 
 /**
  @abstract Checks whether a user exists inside this role.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltRole *role = [builtApplication roleWithName:@"Manager"];
+ 
+     //'bltba9userdd9e741' is a uid of an object of inbuilt Application User class
+     if ([role hasUser:@"bltba9userdd9e741"]) {
+        //User exist
+     } else {
+        //User not exist
+     }
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var role:BuiltRole = builtApplication.roleWithName("Manager")
+ 
+     //'bltba9userdd9e741' is a uid of an object of inbuilt Application User class
+     if (role.hasUser("bltba9userdd9e741")) {
+        //User exist
+     } else {
+        //User not exist
+     }
+ 
+ 
  @param userUid The uid of the user.
  @return Returns whether the user exists or not.
  */
 - (BOOL)hasUser:(NSString *)userUid;
 
 /**
- @abstract query to fetch roles.
- @discussion Since this method returns an object of BuiltQuery class, all the methods of the BuiltQuery class are available and can be used to query the role class of built.io. Use -getRoles method of QueryResult to get the list of roles.
- @return returns a `BuiltQuery` for the role class.
- */
-+ (BuiltQuery *)getRolesQuery;
-
-
-/**
  @abstract Set the name for the role. This value must be set before the role has been saved, and cannot be set once the role has been saved. A role's name can only contain alphanumeric characters, _, -, and spaces.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+     //'blt8h2sample1463j' is a dummy role uid
+
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltRole *role = [builtApplication roleWithUID:@"role_uid"];
+     [role setName:@"Manager"];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var role:BuiltRole = builtApplication.roleWithUID("role_uid")
+     role.setName("Manager")
+ 
  @param name name of the role.
  */
 - (void)setName:(NSString *)name;
 
-
 /**
- Get the name of the role.
- */
-@property(nonatomic, strong, readonly)NSString *roleName;
+Provides BuiltQuery object.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
 
-/**
- Array of users that are included in a `BuiltRole`.
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltRole *role = [builtApplication roleWithName:@"Manager"];
+     BuiltQuery *roleQuery = role.query;
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var role:BuiltRole = builtApplication.roleWithName("Manager")
+     var roleQuery:BuiltQuery = role.query()
+ 
+ 
+@return Query object for Role class
  */
-@property(nonatomic, strong) NSMutableArray *users;
-
-/**
- Array of other roles that are included in a `BuiltRole`. A role may have other roles included in it.
- */
-@property(nonatomic, strong) NSMutableArray *roles;
+- (BuiltQuery *)query;
 
 /**
  @abstract Adds a user to a role
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+     //'bltba9a44506dd9e741' is a uid of an object of inbuilt Application User class
+
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltRole *role = [builtApplication roleWithName:@"Manager"];
+     [role addUser:@"bltba9a44506dd9e741"];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var role:BuiltRole = builtApplication.roleWithName("Manager")
+     role.addUser("bltba9a44506dd9e741")
+ 
+ 
  @param userUid User's uid that needs to be added to the role.
  */
 - (void)addUser:(NSString *)userUid;
 
 /**
  @abstract Removes a user from a role
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+     //'bltba9a44506dd9e741' is a uid of an object of inbuilt Application User class
+
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltRole *role = [builtApplication roleWithName:@"Manager"];
+     [role removeUser:@"bltba9a44506dd9e741"];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var role:BuiltRole = builtApplication.roleWithName("Manager")
+     role.removeUser("bltba9a44506dd9e741")
+ 
  @param userUid User's uid that needs to be removed from the role.
  */
 - (void)removeUser:(NSString *)userUid;
 
 /**
  @abstract Adds a role to this role.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltRole *role = [builtApplication roleWithName:@"Manager"];
+     //'blt4d5sample1962c' is a dummy role uid which we want to remove
+     [role addRole:@"blt4d5sample1962c"];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var role:BuiltRole = builtApplication.roleWithName("Manager")
+     //'blt4d5sample1962c' is a dummy role uid which we want to remove
+     role.addRole("blt4d5sample1962c")
+ 
  @param roleUid uid of the role that has to be added to this role.
  */
 - (void)addRole:(NSString *)roleUid;
 
 /**
  @abstract Removes a role from this role if it exists.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltRole *role = [builtApplication roleWithName:@"Manager"];
+     //'blt4d5sample1962c' is a dummy role uid which we want to remove
+     [role removeRole:@"blt4d5sample1962c"];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var role:BuiltRole = builtApplication.roleWithName("Manager")
+     //'blt4d5sample1962c' is a dummy role uid which we want to remove
+     role.removeRole("blt4d5sample1962c")
+ 
+ 
  @param roleUid uid of the role that has to be removed from this role.
  */
 - (void)removeRole:(NSString *)roleUid;

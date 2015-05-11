@@ -34,6 +34,11 @@
 		BA72F252182284F900F634BB /* TasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA72F251182284F900F634BB /* TasksViewController.m */; };
 		BA8C990D18B1E65E001C1E90 /* BuiltIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA8C990B18B1E65E001C1E90 /* BuiltIO.framework */; };
 		BA8C990E18B1E65E001C1E90 /* BuiltIO.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BA8C990C18B1E65E001C1E90 /* BuiltIO.bundle */; };
+		FAA2FFD71AA039BD00EBEEF9 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA2FFD61AA039BD00EBEEF9 /* libicucore.dylib */; };
+		FAA2FFD91AA039C500EBEEF9 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA2FFD81AA039C500EBEEF9 /* libsqlite3.dylib */; };
+		FAA2FFDD1AA039D600EBEEF9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA2FFDC1AA039D600EBEEF9 /* MobileCoreServices.framework */; };
+		FAA2FFDF1AA039DF00EBEEF9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA2FFDE1AA039DF00EBEEF9 /* CoreData.framework */; };
+		FAA2FFE11AA039E700EBEEF9 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA2FFE01AA039E700EBEEF9 /* CoreFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,13 +81,16 @@
 		BA6A8AB8181F94C300D35AC5 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		BA6A8AB9181F94C300D35AC5 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		BA6A8ABD181F973600D35AC5 /* TasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksViewController.h; sourceTree = "<group>"; };
-		BA6A8AC618200A3C00D35AC5 /* AppIcon60x60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AppIcon60x60@2x.png"; path = "icons/AppIcon60x60@2x.png"; sourceTree = "<group>"; };
-		BA6A8AC718200A4A00D35AC5 /* AppIcon40x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AppIcon40x40@2x.png"; path = "icons/AppIcon40x40@2x.png"; sourceTree = "<group>"; };
-		BA6A8AC818200A5900D35AC5 /* AppIcon29x29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AppIcon29x29@2x.png"; path = "icons/AppIcon29x29@2x.png"; sourceTree = "<group>"; };
 		BA6A8AC91820102900D35AC5 /* todo-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "todo-logo.png"; sourceTree = "<group>"; };
 		BA72F251182284F900F634BB /* TasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksViewController.m; sourceTree = "<group>"; };
 		BA8C990B18B1E65E001C1E90 /* BuiltIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BuiltIO.framework; sourceTree = "<group>"; };
 		BA8C990C18B1E65E001C1E90 /* BuiltIO.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BuiltIO.bundle; sourceTree = "<group>"; };
+		FAA2FFD61AA039BD00EBEEF9 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		FAA2FFD81AA039C500EBEEF9 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		FAA2FFDA1AA039CE00EBEEF9 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		FAA2FFDC1AA039D600EBEEF9 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		FAA2FFDE1AA039DF00EBEEF9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		FAA2FFE01AA039E700EBEEF9 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +98,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAA2FFE11AA039E700EBEEF9 /* CoreFoundation.framework in Frameworks */,
+				FAA2FFDF1AA039DF00EBEEF9 /* CoreData.framework in Frameworks */,
+				FAA2FFDD1AA039D600EBEEF9 /* MobileCoreServices.framework in Frameworks */,
+				FAA2FFD91AA039C500EBEEF9 /* libsqlite3.dylib in Frameworks */,
+				FAA2FFD71AA039BD00EBEEF9 /* libicucore.dylib in Frameworks */,
 				BA6A8ABA181F94C300D35AC5 /* Accounts.framework in Frameworks */,
 				BA6A8ABB181F94C300D35AC5 /* Social.framework in Frameworks */,
 				BA6A8ABC181F94C300D35AC5 /* Twitter.framework in Frameworks */,
@@ -136,9 +149,6 @@
 				BA8C990C18B1E65E001C1E90 /* BuiltIO.bundle */,
 				BA5BF6C41820C91B0081AB02 /* SVProgressHUD */,
 				BA6A8AC91820102900D35AC5 /* todo-logo.png */,
-				BA6A8AC818200A5900D35AC5 /* AppIcon29x29@2x.png */,
-				BA6A8AC718200A4A00D35AC5 /* AppIcon40x40@2x.png */,
-				BA6A8AC618200A3C00D35AC5 /* AppIcon60x60@2x.png */,
 				BA6A8A7E181F837000D35AC5 /* todo */,
 				BA6A8A97181F837000D35AC5 /* todoTests */,
 				BA6A8A77181F837000D35AC5 /* Frameworks */,
@@ -158,6 +168,12 @@
 		BA6A8A77181F837000D35AC5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FAA2FFE01AA039E700EBEEF9 /* CoreFoundation.framework */,
+				FAA2FFDE1AA039DF00EBEEF9 /* CoreData.framework */,
+				FAA2FFDC1AA039D600EBEEF9 /* MobileCoreServices.framework */,
+				FAA2FFDA1AA039CE00EBEEF9 /* libc++.dylib */,
+				FAA2FFD81AA039C500EBEEF9 /* libsqlite3.dylib */,
+				FAA2FFD61AA039BD00EBEEF9 /* libicucore.dylib */,
 				BA6A8AB7181F94C300D35AC5 /* Accounts.framework */,
 				BA6A8AB8181F94C300D35AC5 /* Social.framework */,
 				BA6A8AB9181F94C300D35AC5 /* Twitter.framework */,
@@ -483,6 +499,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "todo/todo-Prefix.pch";
@@ -505,6 +522,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "todo/todo-Prefix.pch";

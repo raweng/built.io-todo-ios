@@ -1,77 +1,90 @@
 //
 //  Built.h
-//  builtDemo
+//  BuiltIO
 //
-//  Created by Akshay Mhatre on 09/02/13.
-//  Copyright (c) 2013 raweng. All rights reserved.
+//  Created by Gautam Lodhiya on 25/09/14.
+//  Copyright (c) 2014 raweng. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import "BuiltDefinitions.h"
 
-/** Contains all Built API classes and functions */
+@class BuiltApplication;
+
+/**
+
+ The Built module acts as the entry point for the SDK.
+
+ */
 @interface Built : NSObject
 
-/**---------------------------------------------------------------------------------------
- * @name Connecting to built.io
- *  ---------------------------------------------------------------------------------------
- */
+//MARK: - Static methods
 
-/**  
-    @abstract Initialize Built
-    @discussion Sets the api key and application uid of your application.
-    @param apiKey api key of your application on built.io
-    @param uid application uid of your application on built.io
- */
-+ (void)initializeWithApiKey:(NSString *)apiKey andUid:(NSString *)uid;
+/**
 
-/**---------------------------------------------------------------------------------------
- * @name Configuring built.io Settings
- *  ---------------------------------------------------------------------------------------
- */
-
-/** 
-    @abstract Sets the Host name and HTTP protocol for initiating calls on built.io
-    @discussion Sets the Host name and HTTP protocol for initiating calls on built.io
-    @param hostname host name
-    @param protocol HTTP protocol for initiating calls (HTTP/HTTPS).
- */
-+ (void)setHostname:(NSString *)hostname protocol:(NSString *)protocol;
-
-
-/**---------------------------------------------------------------------------------------
- * @name Attaching/Removing Headers.
- *  ---------------------------------------------------------------------------------------
- */
-
-/** 
- @abstract Additional headers if required
+  Represents an application
  
- @param header header value
- @param key header key
+  Below is the example of using this method.
+ 
+    // 'blt5d4sample2633b' is a dummy Application API key
+ 
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+
+
+  @param apiKey Your application api-key to uniquely identify the app
+
+  @return New instance of application object for provided api-key
  */
-+ (void)setHeader:(NSString *)header forKey:(NSString *)key;
++ (BuiltApplication *)applicationWithAPIKey:(NSString*)apiKey;
 
 /**
- @abstract Remove a header for a specific key
- @param key key for which to remove the header value
- */
-+ (void)removeHeaderForKey:(NSString *)key;
+ Cancels all queued and executing operations of an application except realtime
 
+ Below is the example of using this method.
+ 
+        //Obj-C
+        [Built cancelAllRequestsOfApplication:builtApplication];
 
-/**---------------------------------------------------------------------------------------
- * @name Set/Remove Tenant
- *  ---------------------------------------------------------------------------------------
- */
-/**
- @abstract set tenant uid 
- @param tenantUid tenant uid
- */
-+ (void)setTenant:(NSString *)tenantUid;
+        //Swift
+        Built.cancelAllRequestsOfApplication(builtApplication)
 
+ @param application BuiltApplication instance object of which all network operation needs to be cancel.
+ */
++ (void)cancelAllRequestsOfApplication:(BuiltApplication*)application;
 
 /**
- @abstract remove any tenants previously set
+ Reachability change helper to notify whenever internet connection is connected or disconnected.
+ 
+ Below is the example of using this method.
+ 
+         //Obj-C
+         [Built reachabilityStatusChangeHandler:^(BuiltReachabilityStatus status) {
+             if (status == BuiltReachabilityStatusNotReachable) {
+             // No Internet connection
+             }else  if (status == BuiltReachabilityStatusReachableViaWiFi) {
+             // Reachable via Wifi
+             }else  if (status == BuiltReachabilityStatusReachableViaWWAN) {
+             // Reachable via 2G/3G/Cellular network
+             }
+         }]
+ 
+        //Swift
+         Built.reachabilityStatusChangeHandler { (status) -> Void in
+             if (status == BuiltReachabilityStatus.NotReachable){
+             // No Internet Connection
+             }else if (status == BuiltReachabilityStatus.ReachableViaWiFi){
+             // Reachable via Wifi
+             }else if (status == BuiltReachabilityStatus.ReachableViaWWAN){
+             // Reachable via 2G/3G/Cellular network
+             }
+         }
+ 
+ @param changeBlock invoked when network rechability has changed
  */
-+ (void)removeTenant;
++ (void)reachabilityStatusChangeHandler:(BuiltRechabilityChangeHandler)changeHandler;
 
 @end

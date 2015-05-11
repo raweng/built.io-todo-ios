@@ -1,164 +1,726 @@
 //
 //  BuiltApplication.h
-//  builtDemo
+//  BuiltIO
 //
-//  Created by Akshay Mhatre on 24/04/13.
-//  Copyright (c) 2013 raweng. All rights reserved.
+//  Created by Gautam Lodhiya on 25/09/14.
+//  Copyright (c) 2014 raweng. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "BuiltQuery.h"
+#import "BuiltDefinitions.h"
 
-/** Application Settings and Users */
+@class BuiltClass;
+@class BuiltAnalytics;
+@class BuiltExtension;
+@class BuiltInstallation;
+@class BuiltNotification;
+@class BuiltRole;
+@class BuiltUser;
+@class BuiltUpload;
+@class BuiltQuery;
+@class BuiltACL;
+@class BuiltSynchronousResponse;
+
+/**
+ *  Represents an Application
+ */
 @interface BuiltApplication : NSObject
 
-/**---------------------------------------------------------------------------------------
- * @name Properties
- *  ---------------------------------------------------------------------------------------
- */
-
 /**
- @abstract name of the application
- */
-@property (nonatomic, strong) NSString *applicationName;
-
-/**
- @abstract api key
- */
-@property (nonatomic, strong) NSString *apiKey;
-
-/**
- @abstract app uid
- */
-@property (nonatomic, strong) NSString *appUID;
-
-/**
- @abstract account name
- */
-@property (nonatomic, strong) NSString *accountName;
-
-/**
- @abstract appDict contains the response of the fetchApplicationSettingsOnSuccess:onError: method when successful
- */
-@property (nonatomic, strong) NSDictionary *appDict;
-
-/**
-@abstract the response containing status code and all the raw HTTP response headers
-*/
-@property (strong, nonatomic, readonly) NSHTTPURLResponse *response;
-
-/**---------------------------------------------------------------------------------------
- * @name Creating BuiltApplication object
- *  ---------------------------------------------------------------------------------------
- */
-
-/**
- @abstract Create a new BuiltApplication object
- @return BuiltApplication object
- */
-+ (BuiltApplication *)application;
-
-/**
- @abstract Create a new BuiltApplication object. Internally calls [BuiltApplication application].
- @return BuiltApplication object
- */
-+ (BuiltApplication *)init;
-
-/**----------------------------------------------------------------------------------------
- * @name Attaching/Removing Headers
- *-----------------------------------------------------------------------------------------
- */
-
-/**
- @abstract Additional headers if required
+ Returns the api-key of application
  
- @param header header value
- @param key header key
+ @warning This property is readonly i.e you can just read the value but can't set its value
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+ 
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    NSString *apiKeyString = builtApplication.apiKey;
+     
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var apiKeyString:NSString = builtApplication.apiKey
+ 
  */
-- (void)setHeader:(NSString *)header forKey:(NSString *)key;
+@property (nonatomic, copy, readonly) NSString *apiKey;
 
 /**
- @abstract Remove a header for a specific key
- @param key key for which to remove the header value
+ Returns the account name of application
+ 
+ @warning This property is readonly i.e you can just read the value but can't set its value
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     NSString *accountNameString = builtApplication.accountName;
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var accountNameString:NSString = builtApplication.accountName
+ 
  */
-- (void)removeHeaderForKey:(NSString *)key;
-
-
-/** --------------------------------------------------------------------------------------
- @name Set api key and app uid for another application
- -----------------------------------------------------------------------------------------
- */
+@property (nonatomic, copy, readonly) NSString *accountName;
 
 /**
- @abstract If you require to retrieve details belonging to some other application, you can use this method to set the app parameters
- @param apiKey api key of the app
- @param uid appuid of the app
- */
-- (void)setApplicationApiKey:(NSString *)apiKey andUid:(NSString *)uid;
+ Returns the name of application
+ 
+ @warning This property is readonly i.e you can just read the value but can't set its value
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+ 
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    NSString *applicationNameString = builtApplication.applicationName;
+ 
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var applicationNameString:NSString = builtApplication.applicationName
 
-/** --------------------------------------------------------------------------------------
- @name Fetch schema of classes
- -----------------------------------------------------------------------------------------
  */
-
-/**
- @abstract fetch schema for all the classes
- @param successBlock Returns schema in callback on success. 'schema' contains the schema for all classes in the application
- @param errorBlock CallBack in case of failure.
- */
-- (void)fetchSchemaForClassesOnSuccess:(void (^) (id schema))successBlock onError:(void (^) (NSError *error))errorBlock;
-
-/**
- @abstract Use when fetching classes schema. This will fetch only the last activity field in the classes schema.
- */
-- (void)onlyLastActivityForSchema;
-
-
-/** --------------------------------------------------------------------------------------
- @name Include Application Variables
- -----------------------------------------------------------------------------------------
- */
-/**
- @abstract returns application variables when fetching application settings if this method is called
- */
-- (void)includeApplicationVariables;
-
-
-/** --------------------------------------------------------------------------------------
- @name Fetch application settings
- -----------------------------------------------------------------------------------------
- */
+@property (nonatomic, copy, readonly) NSString *applicationName;
 
 /**
- @abstract Fetches application details viz. app name, uid, apikey, account name and application variables
- @param successBlock CallBack in case of success.
- @param errorBlock CallBack in case of failure.
- */
-- (void)fetchApplicationSettingsOnSuccess:(void (^) (void))successBlock onError:(void (^) (NSError *error))errorBlock;
+ Returns the current built user [User Session]
+ 
+ @warning This property is readonly i.e you can just read the value but can't set its value
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
 
-/** --------------------------------------------------------------------------------------
- @name Accesors
- -----------------------------------------------------------------------------------------
- */
-/**
- @abstract get value of the application variable for the given key
- @param key the key of the application variable
- @return the value for the key provided
- */
-- (NSString *)applicationVariableForKey:(NSString *)key;
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    BuiltUser *currentLoggedInUser = builtApplication.currentUser;
 
-
-/**
- @abstract Returns a BuiltQuery object for application users class
- @discussion Since this method returns an object of BuiltQuery class, all the methods of the BuiltQuery class are available and can be used to query the application user class of built.io. Use -getUsers method of QueryResult to get the list of users.
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    var currentLoggedInUser:BuiltUser = builtApplication.currentUser
+ 
  */
-+ (BuiltQuery *)getUsersQuery;
+@property (nonatomic, strong, readonly) BuiltUser *currentUser;
 
 /**
- @abstract query to fetch roles.
- @discussion Since this method returns an object of BuiltQuery class, all the methods of the BuiltQuery class are available and can be used to query the role class of built.io. Use -getRoles method of QueryResult to get the list of roles.
- @return returns a `BuiltQuery` for the role class.
+ Returns the current installation object that is saved on the disk.
+ 
+ @warning This property is readonly i.e you can just read the value but can't set its value
+
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *savedInstallationObject = builtApplication.currentInstallation;
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var savedInstallationObject:BuiltInstallation = builtApplication.currentInstallation
+ 
  */
-+ (BuiltQuery *)getRolesQuery;
+@property (nonatomic, strong, readonly) BuiltInstallation *currentInstallation;
+
+/**
+ Cache Policy for application
+ 
+ A set of cache policies are avaliable for use which are listed below.
+ 
+ ONLY_NETWORK (Default)
+ This is the default cache policy which will always get the data from an network call.
+ 
+ CACHE_ONLY
+ This policy which will always get the data from an cache.
+ 
+ CACHE_ELSE_NETWORK
+ This policy will try to first get the data from cache, on failure would make a network call.
+ 
+ NETWORK_ELSE_CACHE
+ It will try to make a network call, on failure would fetch it from cache.
+ 
+ CACHE_THEN_NETWORK
+ This policy would first get the data from cache as well would make a network call to get the updated copy.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+ 
+     //Setting CachePolicy
+     builtApplication.cachePolicy = NETWORK_ONLY;
+     
+     //Getting CachePolicy
+     builtApplication.cachePolicy;
+     
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+
+     //Setting CachePolicy
+     builtApplication.cachePolicy = CachePolicy.NETWORK_ONLY
+ 
+     //Getting CachePolicy
+     builtApplication.cachePolicy
+ 
+ 
+ */
+@property (nonatomic, assign) CachePolicy cachePolicy;
+
+/**
+ Returns the URL in which application is created.
+ 
+ @warning This property is readonly i.e you can just read the value but can't set its value
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     NSString *apiURLString = builtApplication.url;
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var apiURLString:NSString = builtApplication.url
+ 
+ */
+@property (nonatomic, copy, readonly) NSString *url;
+
+/**
+ Get/Set the version of Built.io Backend which is used in the final URL.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     builtApplication.version = @"v2";
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     builtApplication.version = "v2"
+ 
+ */
+@property (nonatomic, copy) NSString *version;
+
+
+//MARK: - Initialization
+
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
+
+//MARK: - Headers
+/**
+ 
+ Set a header for an application
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     [builtApplication setHeader:@"MyValue" forKey:@"My-Custom-Header"];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     builtApplication.setHeader("MyValue", forKey: "My-Custom-Header")
+ 
+ @param headerValue  The header key
+ @param headerKey    The header value
+ */
+- (void)setHeader:(NSString *)headerValue forKey:(NSString *)headerKey;
+
+/**
+ Set a header for an application
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+ 
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    [builtApplication addHeadersWithDictionary:@{@"My-Custom-Header": @"MyValue"}];
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    builtApplication.addHeadersWithDictionary(["My-Custom-Header":"MyValue"])
+ 
+ 
+ @param headers  The headers as dictionary which needs to be added to the application
+ */
+- (void)addHeadersWithDictionary:(NSDictionary *)headers;
+
+/**
+ Removes a header from this application.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     [builtApplication removeHeaderForKey:@"My-Custom-Header"];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     builtApplication.removeHeaderForKey("My-Custom-Header")
+ 
+ @param headerKey    The header key that needs to be removed
+ */
+- (void)removeHeaderForKey:(NSString *)headerKey;
+
+///**
+// *  Sets authentication token in app header
+// *  @param token    The user's token that needs to be set
+// */
+//- (void)setAuthToken:(NSString *)token;
+//
+///**
+// *  Removes a header from this application
+// */
+//- (void)removeAuthToken;
+
+/**
+ Sets the current tenant for this application
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+    //'xyz' is bummy tenant name
+
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    [builtApplication setTenant:@"xyz"];
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    builtApplication.setTenant("xyz")
+ 
+ 
+ @param tenantUID    The tenant uid value
+ */
+- (void)setTenant:(NSString *)tenantUID;
+
+/**
+ Removes the tenant from application
+
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     [builtApplication removeTenant];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     builtApplication.removeTenant()
+ 
+ */
+- (void)removeTenant;
+
+//MARK: - Helper methods
+
+/**
+ Represents a class in this application
+ 
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltClass *projectClass = [builtApplication classWithUID:@"project"];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var projectClass:BuiltClass = builtApplication.classWithUID("project")
+ 
+ @param classUID The uid of class
+ @return Returns an instance of Class
+ */
+- (BuiltClass *)classWithUID:(NSString *)classUID;
+
+/**
+ Represents a analytics in this application.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltAnalytics *analytics = [builtApplication analytics];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var analytics:BuiltAnalytics = builtApplication.analytics()
+ 
+ 
+ @return Returns an instance of a BuiltAnalytics.
+ */
+- (BuiltAnalytics*)analytics;
+
+/**
+ Represents extension in this application
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltExtension *extensionObject = [builtApplication extensionWithName:@"hello"];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var extensionObject:BuiltExtension = builtApplication.extensionWithName("hello")
+ 
+ @param extensionName name of extension
+ @return Returns an instance of a BuiltExtension.
+ */
+- (BuiltExtension *)extensionWithName:(NSString*)extensionName;
+
+/**
+Class for creating new installation and for subscribing/unsubscribing for push notifications against a channel.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication installation];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.installation()
+ 
+ 
+@return Returns an instance of BuiltInstallation.
+ */
+- (BuiltInstallation *)installation;
+
+/**
+Class for updating installation and for subscribing/unsubscribing for push notifications against a channel.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltInstallation *installation = [builtApplication installationWithUID:@"install_uid"];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var installation:BuiltInstallation = builtApplication.installationWithUID("install_uid")
+ 
+ 
+@param installationUID uid of installation needed.
+@return Returns an instance of BuiltInstallation.
+ */
+- (BuiltInstallation *)installationWithUID:(NSString*)installationUID;
+
+/**
+Class for creating a notification for this application.
+
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltNotification *notification = [builtApplication notification];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var notification:BuiltNotification = builtApplication.notification()
+ 
+ 
+@return Returns an instance of BuiltNotification.
+ */
+- (BuiltNotification *)notification;
+
+/**
+Represents a new role with speficied name to create on Built.io Backend.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltRole *managerRole = [builtApplication roleWithName:"Managers"];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var managerRole:BuiltRole = builtApplication.roleWithName("Managers")
+ 
+ 
+@param roleName name of the role to create.
+@return Returns an instance of BuiltRole.
+ */
+- (BuiltRole *)roleWithName:(NSString*)roleName;
+
+/**
+Represents a role on Built.io Backend
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+     //'blt9a1sample5476j' is a dummy role UID
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltRole *builtRole = [builtApplication roleWithUID:@"blt9a1sample5476j"];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var builtRole:BuiltRole = builtApplication.roleWithUID("blt9a1sample5476j")
+ 
+@param roleUID uid if role which is needed.
+@return Returns an instance of BuiltRole.
+ */
+- (BuiltRole *)roleWithUID:(NSString*)roleUID;
+
+/**
+Represents a new user of this application
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltUser *person = [builtApplication user];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var person:BuiltUser = builtApplication.user()
+ 
+@return Returns an instance of BuiltUser.
+ */
+- (BuiltUser *)user;
+
+/**
+Represents a user of this application
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+     //'bltba9a44506dd9e741' is a uid of an object of inbuilt Application User class
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltUser *person = [builtApplication userWithUID:@"bltba9a44506dd9e741"];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var person:BuiltUser = builtApplication.userWithUID("bltba9a44506dd9e741")
+ 
+ 
+@param userUID uid of user needed.
+@return Returns an instance of BuiltUser.
+ */
+- (BuiltUser *)userWithUID:(NSString*)userUID;
+
+/**
+Represents a new file to-upload on Built.io Backend
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltUpload *uploadObject = [builtApplication upload];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var uploadObject:BuiltUpload = builtApplication.upload()
+ 
+@return Returns an instance of BuiltUpload.
+ */
+- (BuiltUpload *)upload;
+
+/**
+Represents a file uploaded on Built.io Backend
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+     //'blt111sample2655c' is a uid of an upload
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltUpload *uploadObject = [builtApplication uploadWithUID:@"blt111sample2655c"];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var uploadObject:BuiltUpload = builtApplication.uploadWithUID("blt111sample2655c")
+ 
+ 
+@param uploadUID uid of file.
+@return Returns an instance of BuiltUpload.
+ */
+- (BuiltUpload *)uploadWithUID:(NSString*)uploadUID;
+
+/**
+Provides BuiltQuery object.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltQuery *userQuery = [builtApplication userQuery];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var userQuery:BuiltQuery = builtApplication.userQuery()
+ 
+@return Query object for user class
+ */
+- (BuiltQuery *)userQuery;
+
+/**
+Provides BuiltQuery object.
+
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltQuery *userRoleQuery = [builtApplication userRoleQuery];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var userRoleQuery:BuiltQuery = builtApplication.userRoleQuery()
+ 
+@return Query object for Role class
+ */
+- (BuiltQuery *)userRoleQuery;
+
+/**
+Returns new ACL object with empty setting
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     BuiltACL *acl = [builtApplication acl];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var acl:BuiltACL = builtApplication.acl()
+ 
+@return new BuiltACL object
+ */
+- (BuiltACL *)acl;
+
+//MARK: - Instance methods
+
+/**
+Changes the host config
+ 
+    //'blt5d4sample2633b' is a dummy Application API key
+ 
+    //Obj-C
+    BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+    [builtApplication setHostname:@"https://api.built.io/" isSSL:YES];
+
+    //Swift
+    var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+    builtApplication.setHostname("https://api.built.io/", isSSL:true)
+ 
+ 
+ 
+@param hostname Built.io Backend hostname
+@param ssl The protocol to be used (http/https) in terms of boolean
+ */
+- (void)setHostname:(NSString *)hostname isSSL:(BOOL)ssl;
+
+/**
+Gets the application variables.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     [builtApplication variableForKey:@"key"];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     builtApplication.variableForKey("key")
+ 
+ 
+@param key application variable key of which value needed.
+@return value of the specified key
+ */
+- (NSString *)variableForKey:(NSString *)key;
+
+/**
+Synchronously fetches the application info.
+
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     NSError *error;
+     BuiltSynchronousResponse *builtSyncResponse = [builtApplication fetchApplicationInfo:error];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var error:NSErrorPointer
+     var builtSyncResponse:BuiltSynchronousResponse = builtApplication.fetchApplicationInfo(error)
+ 
+ 
+@param error Pointer to an NSError that will be set if necessary
+@return Returns BuiltSynchronousResponse wrapper comprising response type (cache or network) and response data holding NSDictionary of the application info.
+ */
+- (BuiltSynchronousResponse *)fetchApplicationInfo:(NSError **)error;
+
+/**
+Asynchronously fetches the application info.
+
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     [builtApplication fetchApplicationInfoInBackgroundWithCompletion:^(ResponseType responseType, NSDictionary *info, NSError *error) {
+     
+     }];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     builtApplication.fetchApplicationInfoInBackgroundWithCompletion { (ResponseType, [NSObject : AnyObject]!, NSError!) -> Void in
+     
+     }
+ 
+ 
+@param successBlock invoked when request processed sucessfully.
+@param errorBlock   invoked when request process fails. error parameter contains the error info.
+@param finallyBlock invoked when request is finished. Will get invoked after sucess or failure.
+ */
+- (void)fetchApplicationInfoInBackgroundWithCompletion:(void (^)(ResponseType responseType, NSDictionary *info, NSError *error))completionBlock;
+
+/**
+Synchronously fetches last activity of all classes of application.
+
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     NSError *error;
+     BuiltSynchronousResponse *builtSyncResponse = [builtApplication fetchLastActivityOfClasses:error];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     var error:NSErrorPointer
+     var builtSyncResponse:BuiltSynchronousResponse = builtApplication.fetchLastActivityOfClasses(error)
+ 
+ 
+@param error Pointer to an NSError that will be set if necessary.
+@return Returns BuiltSynchronousResponse wrapper comprising response type (cache or network) and response data holding NSDictionary with list of class uid as key and its respective last updated time.
+ */
+- (BuiltSynchronousResponse *)fetchLastActivityOfClasses:(NSError **)error;
+
+/**
+Asynchronously fetches last activity of all classes of application.
+
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     [builtApplication fetchLastActivityOfClassesInBackgroundWithCompletion:^(ResponseType responseType, NSDictionary *lastActivityDictionary, NSError *error) {
+     
+     }];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     builtApplication.fetchLastActivityOfClassesInBackgroundWithCompletion { (ResponseType, [NSObject : AnyObject]!, NSError!) -> Void in
+     
+     }
+ 
+ 
+@param completionBlock invoked when request is finished. lastActivityDictionary in block will contain list of class uid as key and its respective last updated time.
+ */
+- (void)fetchLastActivityOfClassesInBackgroundWithCompletion:(void (^)(ResponseType responseType, NSDictionary *lastActivityDictionary, NSError *error))completionBlock;
+
+/**
+ @abstract Advises the operation object that it should stop executing its task.
+ 
+     //'blt5d4sample2633b' is a dummy Application API key
+ 
+     //Obj-C
+     BuiltApplication *builtApplication = [Built applicationWithAPIKey:@"blt5d4sample2633b"];
+     [builtApplication cancelRequests];
+     
+     //Swift
+     var builtApplication:BuiltApplication = Built.applicationWithAPIKey("blt5d4sample2633b")
+     builtApplication.cancelRequests()
+ 
+ 
+ @discussion This method does not force your operation code to stop. Instead, it updates the object’s internal flags to reflect the change in state. If the operation has already finished executing, this method has no effect. Canceling an operation that is currently in an operation queue, but not yet executing, makes it possible to remove the operation from the queue sooner than usual.
+ */
+- (void)cancelRequests;
 
 @end

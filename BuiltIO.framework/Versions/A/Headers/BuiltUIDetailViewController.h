@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BuiltDefinitions.h"
 
-@class BuiltObject;
+@class BuiltClass, BuiltObject, BuiltApplication;
 
 /**---------------------------------------------------------------------------------------
  *  Sub-class of UIViewController with support of BuiltIO SDK
@@ -17,19 +18,36 @@
 @interface BuiltUIDetailViewController : UIViewController
 
 /**
+ @abstract The application to which we should point to.
+ */
+@property (nonatomic, strong, readonly) BuiltApplication *builtApplication;
+
+/**
  @abstract Built-Class-UID of which object UID is set.
  */
-@property (nonatomic, copy) NSString* classUID;
+@property (nonatomic, copy, readonly) NSString* classUID;
 
 /**
  @abstract Built-Object-UID which need to be fetched.
  */
-@property (nonatomic, copy) NSString* objectUID;
+@property (nonatomic, copy, readonly) NSString* objectUID;
 
 /**
  @abstract Built-Object which is fetched according to objectUID set.
  */
 @property (nonatomic, readonly) BuiltObject *builtObject;
+
+/**
+ *  Usual init of UIViewController with BuiltClass insantance and objectUID to fetch detail.
+ *
+ *  @param nibNameOrNil   nib name to load nib if present or else nil
+ *  @param nibBundleOrNil buldle where nib is situated or else nil
+ *  @param builtClass     BuiltClass instance of which object need to fetch.
+ *  @param objectUID      UID of object which need to fetch.
+ *
+ *  @return UIViewControler instance
+ */
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil builtClass:(BuiltClass*)builtClass objectUID:(NSString*)objectUID;
 
 /**
  @abstract called before whenever a network request is initialed.
