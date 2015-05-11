@@ -1,7 +1,7 @@
-todo
-====
+ToDo app
+===========
 
-A simple ToDo app built using [built.io](http://www.built.io/) as backend
+A simple ToDo app built using [Built.io Backend](http://www.built.io/)
 
 ##Features
 - Create a task
